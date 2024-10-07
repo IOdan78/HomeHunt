@@ -1,0 +1,61 @@
+@import "../../assets/styles/variables";
+
+.Register {
+  /* Container */
+  .Register-container {
+    height: 100vh;
+  }
+
+  .Register-form {
+    margin-top: 70px;
+    max-width: 450px;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .btn-custom {
+    background-color: $app-primary;
+    color: white;
+    border: none;
+  }
+
+  .text-custom {
+    color: $app-primary;
+  }
+
+  .btn-custom:hover {
+    background-color: $app-primary;
+  }
+
+  /* Logo and form text */
+  .Register-logo {
+    height: 50px;
+  }
+
+  /* Google Register button styling */
+  .google-logo {
+    height: 35px;
+  }
+
+  hr {
+    margin: 20px 0;
+  }
+
+  .form-control {
+    padding: 15px;
+  }
+
+  /* Image container */
+  .Register-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .Register-image img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}

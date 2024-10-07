@@ -1,0 +1,35 @@
+@import './variables';
+
+@mixin font-style($weight, $size, $lineHeight) {
+  font-family: "Inter", sans-serif !important;
+  font-weight: $weight !important;
+  font-size: $size !important;
+  line-height: $lineHeight !important;
+  font-style: normal !important;
+  font-optical-sizing: auto !important;
+  font-variation-settings: "slnt" 0 !important;
+}
+
+.bold-30 {
+  @include font-style(500, 30px, 120%);
+}
+
+.bold-25 {
+  @include font-style(500, 25px, 120%);
+}
+
+.bold-20{
+  @include font-style(500, 20px, 120%)
+}
+
+.light-18 {
+  @include font-style(300, 18px, 150%);
+}
+
+.light-16 {
+  @include font-style(300, 16px, 150%);
+}
+
+.light-14 {
+  @include font-style(300, 14px, 150%);
+}

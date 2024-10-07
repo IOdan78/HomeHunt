@@ -1,0 +1,27 @@
+@import "variables";
+@import "typography";
+
+.btn-primary{
+    background-color: $app-primary;
+    border-color: $app-primary;
+}
+
+.btn-outline-primary{
+    border-color: $app-primary;
+    color: $app-primary;
+}
+
+.btn-outline{
+    border-color: none;
+    color: none;
+}
+
+.btn:hover{
+    background-color: $app-primary;
+    border-color: $app-primary;
+}
+
+.btn:focus:active{
+    background-color: $app-primary;
+    border-color: $app-primary;
+}

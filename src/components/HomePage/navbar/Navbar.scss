@@ -1,0 +1,133 @@
+@import "../../../assets//styles/variables";
+
+.navbar {
+  background-color: #fff;
+  padding: 1rem 2rem;
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-toggler {
+    display: none;
+    border: none;
+    background: none;
+    outline: none;
+
+    .navbar-toggler-icon {
+      display: block;
+      width: 30px;
+      height: 30px;
+      background-color: $app-primary;
+    }
+  }
+
+      .social-icons {
+      i {
+        font-size: 1.8rem;
+      }
+
+      i:hover {
+        color: $app-primary;
+      }
+    }
+
+  .navbar-icons {
+    display: flex;
+    margin-left: 100px;
+
+    .navbar-icon-profile {
+      width: 50px;
+      height: auto;
+      cursor: pointer;
+      margin-right: 25px;
+    }
+    .navbar-icon {
+      width: 30px;
+      height: auto;
+      cursor: pointer;
+      margin-right: 25px;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    .btn-orange {
+      background-color: $app-primary;
+      color: white;
+      border: none;
+      padding: 0.5rem 1.25rem;
+      font-weight: bold;
+      font-size: 1rem;
+
+      &:hover {
+        background-color: $app-primary;
+        color: white;
+      }
+      &:active {
+        color: white;
+      }
+
+      .navbar-icon-post {
+        margin-bottom: 5px;
+        margin-right: 3px;
+      }
+    }
+  }
+
+  .navbar-collapse {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  @media (max-width: 992px) {
+    .navbar-icons {
+      margin-left: 20px;
+      flex-direction: column;
+
+      .navbar-icon,
+      .navbar-icon-profile {
+        margin: 10px 0;
+      }
+    }
+
+    .navbar-collapse {
+      flex-direction: column;
+      display: none;
+
+      &.show {
+        display: flex;
+      }
+    }
+
+    .navbar-toggler {
+      display: block;
+    }
+
+  }
+
+  @media (max-width: 576px) {
+    padding: 0.5rem 1rem;
+
+    .navbar-brand {
+      .fs-4 {
+        font-size: 1.2rem;
+      }
+    }
+
+    .navbar-icons {
+      .navbar-icon,
+      .navbar-icon-profile {
+        width: 25px;
+      }
+    }
+
+    .btn-orange {
+      font-size: 0.9rem;
+      padding: 0.3rem 0.8rem;
+    }
+  }
+}

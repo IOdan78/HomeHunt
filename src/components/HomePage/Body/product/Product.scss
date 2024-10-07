@@ -1,0 +1,29 @@
+@import "../../../../assets/styles/variables";
+
+.product-container {
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    .button-demo {
+      background-color: white;
+      border: none;
+    }
+    .active {
+      border-bottom: 2px solid $app-primary;
+    }
+  }
+  .button-more{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .see-more{
+      padding: 10px;
+      padding-left: 150px;
+      padding-right: 150px;
+    }
+  }
+}

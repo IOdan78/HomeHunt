@@ -1,0 +1,65 @@
+@import "../../assets/styles/variables";
+
+.Login {
+  .login-container {
+    height: 100vh;
+  }
+
+  .loading-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .login-form {
+    margin-top: 120px;
+    max-width: 450px;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .btn-custom {
+    background-color: $app-primary;
+    color: white;
+    border: none;
+  }
+
+  .text-custom {
+    color: $app-primary;
+  }
+
+  .form-control {
+    padding: 15px;
+  }
+
+  .btn-custom:hover {
+    background-color: $app-primary;
+  }
+
+  .login-logo {
+    height: 50px;
+  }
+
+  .google-logo {
+    height: 35px;
+  }
+
+  hr {
+    margin: 20px 0;
+  }
+
+  .login-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .login-image img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.bc07c910.css",
+    "main.js": "/static/js/main.a92029c5.js",
+    "static/media/Footer.svg": "/static/media/Footer.43411c831ff97a4fe49e61d003de2f64.svg",
+    "static/media/HomePage.svg": "/static/media/HomePage.9ecd7acf2dc90ff580eae49f4e14fc8b.svg",
+    "static/media/Login.svg": "/static/media/Login.148080f3f3f4f53fffa4f914ff5bc887.svg",
+    "static/media/Register.svg": "/static/media/Register.f56f88d286a9b5253cedec9d389cd429.svg",
+    "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "static/media/Logo.svg": "/static/media/Logo.91467003595eb72bd180abf1b1eb53d7.svg",
+    "static/media/Search.svg": "/static/media/Search.38002ea3f331f144be20bddfb2e6f9e9.svg",
+    "static/media/SearchHome.svg": "/static/media/SearchHome.5ead87f020c6d94f52015e4b85bc6002.svg",
+    "static/media/Luggage.svg": "/static/media/Luggage.a1e3a34890c1d3ac4045eef4a887be5d.svg",
+    "static/media/Check.svg": "/static/media/Check.86409f19b6e813aac765f779b82188aa.svg",
+    "static/media/Google.svg": "/static/media/Google.b31a8b352d8f803c81d27ec33d2b3269.svg",
+    "static/media/List.svg": "/static/media/List.10f7d6707f10fcd4c794bf5719632fff.svg",
+    "static/media/Phone.svg": "/static/media/Phone.231dd24ca3d710740f9a52b7999fe4ee.svg",
+    "static/media/Support.svg": "/static/media/Support.9d3a9cb620d9978eaf03d3067f9a63f0.svg",
+    "index.html": "/index.html",
+    "static/media/Post.svg": "/static/media/Post.9a1bd4fe212a3d68c6b8bf8a7006482c.svg",
+    "main.bc07c910.css.map": "/static/css/main.bc07c910.css.map",
+    "main.a92029c5.js.map": "/static/js/main.a92029c5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bc07c910.css",
+    "static/js/main.a92029c5.js"
+  ]
+}
