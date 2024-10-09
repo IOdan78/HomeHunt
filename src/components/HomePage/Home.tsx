@@ -10,8 +10,10 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Cuộn lên đầu trang khi component được render
+    window.scrollTo(0, 0);
+    
     const handleLoad = () => {
-      // Khi mọi thứ (bao gồm cả hình ảnh) đã được tải xong
       setLoading(false);
     };
 
@@ -19,10 +21,8 @@ function Home() {
     let loadedImages = 0;
 
     if (bodyImages.length === 0) {
-      // Nếu không có hình ảnh thì coi như đã tải xong
       handleLoad();
     } else {
-      // Nếu có hình ảnh, đợi tất cả hình ảnh tải xong
       bodyImages.forEach((image) => {
         image.addEventListener("load", () => {
           loadedImages++;
@@ -31,7 +31,7 @@ function Home() {
           }
         });
 
-        // Kiểm tra nếu ảnh đã được cache (tức là đã load trước đó)
+        // Kiểm tra nếu ảnh đã được cache
         if (image.complete) {
           loadedImages++;
           if (loadedImages === bodyImages.length) {
@@ -62,6 +62,9 @@ function Home() {
         )}
       </div>
 
+      {/* Đảm bảo footer không bị đẩy lên trên navbar */}
+      {loading && <div className="footer-placeholder" style={{ height: '60px' }} />}
+      
       <div className="footer">
         <Footer />
       </div>

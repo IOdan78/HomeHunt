@@ -24,5 +24,9 @@
   .footer {
     flex-shrink: 0; // Keeps footer at the bottom
     margin-top: auto; // Pushes footer down to the bottom when content is small
+    .footer-placeholder {
+      height: 60px; /* Chiều cao này nên bằng chiều cao của Footer */
+      background: transparent; /* Có thể thay đổi nếu cần */
+    }
   }
 }
