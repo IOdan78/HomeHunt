@@ -8,7 +8,7 @@ import Google from "../../assets/images/Google.svg";
 import LazyLoad from "react-lazyload";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { setIsLoggedIn, setUserRole } = useLogin();
   const { isLoggedIn } = useLogin();
@@ -23,14 +23,14 @@ const Login: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password);
+    console.log("Username:", username, "Password:", password);
 
     const response = await fetch("http://localhost:5000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
     });
 
     const data = await response.json();
@@ -73,12 +73,12 @@ const Login: React.FC = () => {
               <form onSubmit={handleLogin}>
                 <div className="mb-3">
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
-                    id="email"
+                    id="text"
                     placeholder="E-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                   />
                 </div>

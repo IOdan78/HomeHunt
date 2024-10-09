@@ -9,7 +9,7 @@ import LazyLoad from "react-lazyload";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [fullname, setFullname] = useState("");
   const [phone, setPhone] = useState<number | undefined>(undefined);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -41,7 +41,7 @@ const Register: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, phone, password }),
+        body: JSON.stringify({ username, fullname, phone, password }),
       });
 
       const data = await response.json();
@@ -109,7 +109,7 @@ const Register: React.FC = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Tên người dùng"
+                    placeholder="Tên đăng nhập"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
@@ -117,11 +117,11 @@ const Register: React.FC = () => {
                 </div>
                 <div className="mb-3">
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
-                    placeholder="E-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Họ và tên"
+                    value={fullname}
+                    onChange={(e) => setFullname(e.target.value)}
                     required
                   />
                 </div>
