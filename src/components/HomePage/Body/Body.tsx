@@ -26,7 +26,7 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
             className="position-absolute w-100 img-fluid"
           />
         </LazyLoad>
-        <div className="d-flex justify-content-center position-relative z-1">
+        <div className="content-wrapper d-flex justify-content-center align-items-center">
           <div className="search-box d-flex align-items-center">
             <div className="location d-flex align-items-center justify-content-center">
               <i className="bi bi-geo-alt-fill"></i>
@@ -61,7 +61,7 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
                 />
               </div>
               <div className="bold-25">Sơ đồ và chi tiết phòng</div>
-              <div className="light-14 ">
+              <div className="light-14">
                 Nhận biết số phòng, hướng, sơ đồ tầng và bạn cùng phòng.
               </div>
             </div>
@@ -74,7 +74,7 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
                 />
               </div>
               <div className="bold-25">Được xác minh 100%</div>
-              <div className="light-14 ">
+              <div className="light-14">
                 Bạn sẽ nhận được những gì như đã hứa.
               </div>
             </div>
@@ -87,7 +87,7 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
                 />
               </div>
               <div className="bold-25">Giá thành được đảm bảo</div>
-              <div className="light-14 ">
+              <div className="light-14">
                 Sẽ tìm được mức giá tốt nhất cho bạn.
               </div>
             </div>
@@ -100,14 +100,16 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
                 />
               </div>
               <div className="bold-25">Chăm sóc khách hàng 1v1</div>
-              <div className="light-14 ">Sẽ hỗ trợ bạn mọi thời điểm.</div>
+              <div className="light-14">Sẽ hỗ trợ bạn mọi thời điểm.</div>
             </div>
           </div>
         </div>
       </div>
+
       <div className="mb-5">
         <Product />
       </div>
+
       <div className="container">
         <div className="features-section text-center">
           <div className="bold-30">Đặt phòng dễ dàng</div>
@@ -122,7 +124,7 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
                 />
               </div>
               <div className="bold-25">Tìm kiếm và đảm bảo</div>
-              <div className="light-14 ">Xác minh nơi ở bạn chọn.</div>
+              <div className="light-14">Xác minh nơi ở bạn chọn.</div>
             </div>
             <div className="col-md-4 feature-item">
               <div className="icon-container">
@@ -133,7 +135,7 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
                 />
               </div>
               <div className="bold-25">Hoàn thành đơn đăng ký</div>
-              <div className="light-14 ">
+              <div className="light-14">
                 Hãy để chúng tôi lo vấn đề giấy tờ.
               </div>
             </div>
@@ -146,13 +148,14 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
                 />
               </div>
               <div className="bold-25">Tìm nhà hoàn tất</div>
-              <div className="light-14 ">
+              <div className="light-14">
                 Giờ thì đến điểm hẹn nhận nhà mới thôi.
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div className="container">
         <div className="text-center">
           <div className="bold-30">Chủ nhà hoặc Nhà quản lý bất động sản</div>
@@ -162,7 +165,7 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
           <button
             type="button"
             className="btn btn-primary px-5 py-3 mb-5"
-            onClick={() => setShowPost(true)} // Hiển thị phần post
+            onClick={() => setShowPost(true)}
           >
             Cho thuê
           </button>

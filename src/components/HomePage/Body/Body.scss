@@ -1,19 +1,36 @@
 @import "../../../assets/styles/variables";
 
 .body {
-  .icon-img{
+  .icon-img {
     width: 150px;
   }
+
+  .background {
+    position: relative;
+    height: 100vh; // Đặt chiều cao 100% của viewport
+    overflow: hidden; // Đảm bảo không có phần nào của ảnh tràn ra ngoài
+  }
+
+  .background img {
+    object-fit: cover; // Đảm bảo ảnh nền bao phủ toàn bộ khung hình
+    height: 100%;
+  }
+
+  .content-wrapper {
+    position: relative;
+    z-index: 1; // Đảm bảo các thẻ div luôn ở phía trên ảnh nền
+  }
+
   .search-box {
     margin-top: 490px;
     width: 100%;
     max-width: 800px;
-    background-color: white; // Màu nền của box
-    border-radius: 5px; // Bo góc
+    background-color: white;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     padding: 30px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); // Đổ bóng
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
     .location {
       background-color: #fff;
@@ -54,9 +71,11 @@
       }
     }
   }
+
   .features-section {
     margin-top: 50px;
     margin-bottom: 100px;
+
     .icon-container {
       background-color: #ffe9e4;
       border-radius: 50%;
@@ -69,8 +88,10 @@
       margin-bottom: 50px;
     }
   }
+
   .trending-carousel-wrapper {
     position: relative;
+
     .scroll-button {
       position: absolute;
       top: 50%;
@@ -113,6 +134,37 @@
       width: 100%;
       height: auto;
       object-fit: cover;
+    }
+  }
+
+  // Responsive behavior to prevent overlapping elements on large screens
+  @media (min-width: 1200px) {
+    .content-wrapper {
+      margin-top: 50px; // Adjust this to ensure the elements maintain proper spacing
+    }
+
+    .search-box {
+      margin-top: 20%; // Adjust to keep the search box properly aligned on larger screens
+    }
+  }
+
+  @media (max-width: 768px) {
+    .search-box {
+      margin-top: 200px; // Adjust on smaller screens
+      padding: 20px;
+    }
+
+    .icon-img {
+      width: 100px;
+    }
+
+    .features-section {
+      margin-bottom: 50px;
+
+      .icon-container {
+        width: 80px;
+        height: 80px;
+      }
     }
   }
 }

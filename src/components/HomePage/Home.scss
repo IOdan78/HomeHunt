@@ -1,13 +1,28 @@
 .homepage {
   position: relative;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
-  .loading-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+  .header {
+    flex-shrink: 0; // Ensures the header stays at the top
   }
 
+  .body {
+    flex-grow: 1; // Ensures the body takes up the remaining space
+    position: relative;
+
+    .loading-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+  }
+
+  .footer {
+    flex-shrink: 0; // Keeps footer at the bottom
+    margin-top: auto; // Pushes footer down to the bottom when content is small
+  }
 }

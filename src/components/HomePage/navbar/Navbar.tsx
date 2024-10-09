@@ -45,6 +45,10 @@ function Navbar({ setShowPost }: NavbarProps) {
     window.location.href = 'https://www.facebook.com/profile.php?id=100083381929647&mibextid=LQQJ4d&rdid=BhXYaU2RqY8oCPny&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FDB7tKaK47H1zKzxa%2F%3Fmibextid%3DLQQJ4d';
   };
 
+  const handleChat = () => {
+    window.location.href = 'https://www.facebook.com/messages/t/100343929395378';
+  };
+
   const isPostPage = location.pathname === "/post";
 
   return (
@@ -68,10 +72,12 @@ function Navbar({ setShowPost }: NavbarProps) {
 
         <div className={`navbar-collapse ${isMenuOpen ? "show" : ""}`}>
           <div className="navbar-icons d-flex align-items-center">
-            <div className="social-icons">            <i className="bi bi-people-fill navbar-icon"></i>
+            <div className="social-icons">            
+            <i className="bi bi-people-fill navbar-icon"></i>
+
             <i className="bi bi-send-fill navbar-icon"></i>
 
-            <i className="bi bi-chat-dots-fill navbar-icon"></i>
+            <i className="bi bi-chat-dots-fill navbar-icon" onClick={handleChat}></i>
 
             <i className="bi bi-person-circle navbar-icon"></i>
 
