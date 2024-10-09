@@ -15,6 +15,7 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { isLoggedIn } = useLogin();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -57,7 +58,7 @@ const Register: React.FC = () => {
   };
 
   const handleLogoClick = () => {
-    navigate("/"); 
+    navigate("/");
   };
 
   return (
@@ -66,7 +67,21 @@ const Register: React.FC = () => {
         <div className="row h-100">
           <div className="col-md-6 Register-image d-none d-md-block g-0">
             <LazyLoad offset={0}>
-              <img src={IMG} alt="Building" className="img-fluid" />
+              {loading && (
+                <div className="loading-icon">
+                  {" "}
+                  {/* Placeholder for loading icon */}
+                  <span>Loading...</span>
+                </div>
+              )}
+              <img
+                src={IMG}
+                alt="Building"
+                className="img-fluid"
+                style={{ display: loading ? "none" : "block" }}
+                onLoad={() => setLoading(false)}
+                onError={() => setLoading(false)}
+              />
             </LazyLoad>
           </div>
           <div className="col-md-6 d-grid justify-content-center">

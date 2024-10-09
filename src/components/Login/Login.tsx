@@ -13,8 +13,9 @@ const Login: React.FC = () => {
   const { setIsLoggedIn, setUserRole } = useLogin();
   const { isLoggedIn } = useLogin();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+  useEffect(() => {
     if (isLoggedIn) {
       navigate("/", { replace: true });
     }
@@ -123,7 +124,21 @@ const Login: React.FC = () => {
 
           <div className="col-md-6 login-image d-none d-md-block g-0">
             <LazyLoad offset={0}>
-              <img src={IMG} alt="Building" className="img-fluid" />
+              {loading && (
+                <div className="loading-icon">
+                  {" "}
+                  {/* Placeholder for loading icon */}
+                  <span>Loading...</span>
+                </div>
+              )}
+              <img
+                src={IMG}
+                alt="Building"
+                className="img-fluid"
+                style={{ display: loading ? "none" : "block" }}
+                onLoad={() => setLoading(false)}
+                onError={() => setLoading(false)}
+              />
             </LazyLoad>
           </div>
         </div>

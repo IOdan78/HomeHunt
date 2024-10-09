@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Background from "../../../assets/images/HomePage.svg";
 import "./Body.scss";
 import Check from "../../../assets/images/Check.svg";
@@ -16,14 +16,26 @@ interface BodyProps {
 }
 
 const Body: React.FC<BodyProps> = ({ setShowPost }) => {
+  const [loading, setLoading] = useState(true); // Track loading state
+
   return (
     <div className="body">
       <div className="container-fluid p-0 position-relative background">
         <LazyLoad offset={0}>
+          {loading && (
+            <div className="loading-icon">
+              {" "}
+              {/* Placeholder for loading icon */}
+              <span>Loading...</span>
+            </div>
+          )}
           <img
             src={Background}
             alt="Background"
             className="position-absolute w-100 img-fluid"
+            style={{ display: loading ? "none" : "block" }} 
+            onLoad={() => setLoading(false)} 
+            onError={() => setLoading(false)} 
           />
         </LazyLoad>
         <div className="content-wrapper d-flex justify-content-center align-items-center">
