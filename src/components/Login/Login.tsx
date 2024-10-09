@@ -76,7 +76,7 @@ const Login: React.FC = () => {
                     type="text"
                     className="form-control"
                     id="text"
-                    placeholder="E-mail"
+                    placeholder="Tên đăng nhập"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
