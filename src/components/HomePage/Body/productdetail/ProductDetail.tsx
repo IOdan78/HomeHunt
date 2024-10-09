@@ -6,18 +6,18 @@ const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const allProducts = [
-   { id: 1, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
+    { id: 1, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
     { id: 2, title: "Product 2", image: "your-image-url-2", price: "300,000 VND", description: "This is a description for Product 2." },
     { id: 3, title: "Product 3", image: "your-image-url-3", price: "400,000 VND", description: "This is a description for Product 3." },
-    { id: 4, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
-    { id: 5, title: "Product 2", image: "your-image-url-2", price: "300,000 VND", description: "This is a description for Product 2." },
-    { id: 6, title: "Product 3", image: "your-image-url-3", price: "400,000 VND", description: "This is a description for Product 3." },
-    { id: 7, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
-    { id: 8, title: "Product 2", image: "your-image-url-2", price: "300,000 VND", description: "This is a description for Product 2." },
-    { id: 9, title: "Product 3", image: "your-image-url-3", price: "400,000 VND", description: "This is a description for Product 3." },
-    { id: 10, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
-    { id: 11, title: "Product 2", image: "your-image-url-2", price: "300,000 VND", description: "This is a description for Product 2." },
-    { id: 12, title: "Product 3", image: "your-image-url-3", price: "400,000 VND", description: "This is a description for Product 3." },
+    { id: 4, title: "Product 4", image: "your-image-url-4", price: "200,000 VND", description: "This is a description for Product 4." },
+    { id: 5, title: "Product 5", image: "your-image-url-5", price: "300,000 VND", description: "This is a description for Product 5." },
+    { id: 6, title: "Product 6", image: "your-image-url-6", price: "400,000 VND", description: "This is a description for Product 6." },
+    { id: 7, title: "Product 7", image: "your-image-url-7", price: "200,000 VND", description: "This is a description for Product 7." },
+    { id: 8, title: "Product 8", image: "your-image-url-8", price: "300,000 VND", description: "This is a description for Product 8." },
+    { id: 9, title: "Product 9", image: "your-image-url-9", price: "400,000 VND", description: "This is a description for Product 9." },
+    { id: 10, title: "Product 10", image: "your-image-url-10", price: "200,000 VND", description: "This is a description for Product 10." },
+    { id: 11, title: "Product 11", image: "your-image-url-11", price: "300,000 VND", description: "This is a description for Product 11." },
+    { id: 12, title: "Product 12", image: "your-image-url-12", price: "400,000 VND", description: "This is a description for Product 12." },
   ];
 
   const product = allProducts.find((p) => p.id === Number(id));

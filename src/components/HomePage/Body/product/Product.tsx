@@ -1,23 +1,24 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import "./Product.scss";
 
 const Product: React.FC = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const allProducts = [
-   { id: 1, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
+    { id: 1, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
     { id: 2, title: "Product 2", image: "your-image-url-2", price: "300,000 VND", description: "This is a description for Product 2." },
     { id: 3, title: "Product 3", image: "your-image-url-3", price: "400,000 VND", description: "This is a description for Product 3." },
-    { id: 4, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
-    { id: 5, title: "Product 2", image: "your-image-url-2", price: "300,000 VND", description: "This is a description for Product 2." },
-    { id: 6, title: "Product 3", image: "your-image-url-3", price: "400,000 VND", description: "This is a description for Product 3." },
-    { id: 7, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
-    { id: 8, title: "Product 2", image: "your-image-url-2", price: "300,000 VND", description: "This is a description for Product 2." },
-    { id: 9, title: "Product 3", image: "your-image-url-3", price: "400,000 VND", description: "This is a description for Product 3." },
-    { id: 10, title: "Product 1", image: "your-image-url-1", price: "200,000 VND", description: "This is a description for Product 1." },
-    { id: 11, title: "Product 2", image: "your-image-url-2", price: "300,000 VND", description: "This is a description for Product 2." },
-    { id: 12, title: "Product 3", image: "your-image-url-3", price: "400,000 VND", description: "This is a description for Product 3." },
+    { id: 4, title: "Product 4", image: "your-image-url-4", price: "200,000 VND", description: "This is a description for Product 4." },
+    { id: 5, title: "Product 5", image: "your-image-url-5", price: "300,000 VND", description: "This is a description for Product 5." },
+    { id: 6, title: "Product 6", image: "your-image-url-6", price: "400,000 VND", description: "This is a description for Product 6." },
+    { id: 7, title: "Product 7", image: "your-image-url-7", price: "200,000 VND", description: "This is a description for Product 7." },
+    { id: 8, title: "Product 8", image: "your-image-url-8", price: "300,000 VND", description: "This is a description for Product 8." },
+    { id: 9, title: "Product 9", image: "your-image-url-9", price: "400,000 VND", description: "This is a description for Product 9." },
+    { id: 10, title: "Product 10", image: "your-image-url-10", price: "200,000 VND", description: "This is a description for Product 10." },
+    { id: 11, title: "Product 11", image: "your-image-url-11", price: "300,000 VND", description: "This is a description for Product 11." },
+    { id: 12, title: "Product 12", image: "your-image-url-12", price: "400,000 VND", description: "This is a description for Product 12." },
   ];
 
   const [visibleProducts, setVisibleProducts] = useState(8);
@@ -35,13 +36,21 @@ const Product: React.FC = () => {
 
   const displayProducts = allProducts.slice(0, visibleProducts);
 
+  const handleProductClick = (id: number) => {
+    navigate(`/product/${id}`); // Navigate to product detail page
+  };
+
   return (
     <div className="container product-container">
       <div className="bold-30 text-center mb-2">Đề xuất cho bạn</div>
       <div className="row mb-3">
         {displayProducts.map((product) => (
           <div className="col-md-3 mb-4" key={product.id}>
-            <Link to={`/product/${product.id}`} className="card"> {/* Link to product detail */}
+            <div 
+              className="card" 
+              onClick={() => handleProductClick(product.id)} // Handle click event
+              style={{ cursor: 'pointer' }} // Change cursor to pointer
+            >
               <img
                 src={product.image}
                 className="card-img-top"
@@ -50,15 +59,13 @@ const Product: React.FC = () => {
               <div className="card-body">
                 <h5 className="card-title">{product.title}</h5>
                 <p className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  {product.description} {/* Update description content */}
                 </p>
               </div>
-            </Link>
+            </div>
           </div>
         ))}
       </div>
-
       {/* Conditionally render "See More" or "Hide" button */}
       {allProducts.length > 8 && (
         <div className="button-more">
@@ -68,7 +75,7 @@ const Product: React.FC = () => {
               className="btn btn-primary see-more"
               onClick={handleSeeMore}
             >
-              Xem Thêm
+              Xem Thêm nhà
             </button>
           ) : (
             <button

@@ -7,6 +7,7 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ setShowPost }) => {
+  const [phoneseller, setPhoneseller] = useState("");
   const [buildingName, setBuildingName] = useState("");
   const [address, setAddress] = useState("");
   const [propertyType, setPropertyType] = useState("");
@@ -23,7 +24,9 @@ const Post: React.FC<PostProps> = ({ setShowPost }) => {
   const [deposit, setDeposit] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedImages, setSelectedImages] = useState<{ url: string; file: File }[]>([]);
+  const [selectedImages, setSelectedImages] = useState<
+    { url: string; file: File }[]
+  >([]);
   const navigate = useNavigate();
 
   const handlePost = async (e: React.FormEvent) => {
@@ -31,6 +34,7 @@ const Post: React.FC<PostProps> = ({ setShowPost }) => {
     const formData = new FormData();
 
     // Append all the text fields
+    formData.append("phoneseller", phoneseller);
     formData.append("buildingName", buildingName);
     formData.append("address", address);
     formData.append("propertyType", propertyType);
@@ -84,7 +88,9 @@ const Post: React.FC<PostProps> = ({ setShowPost }) => {
 
   const handleRemoveImage = (index: number) => {
     URL.revokeObjectURL(selectedImages[index].url);
-    setSelectedImages((prevImages) => prevImages.filter((_, imgIndex) => imgIndex !== index));
+    setSelectedImages((prevImages) =>
+      prevImages.filter((_, imgIndex) => imgIndex !== index)
+    );
   };
 
   const handleCancel = () => {
@@ -98,6 +104,16 @@ const Post: React.FC<PostProps> = ({ setShowPost }) => {
   return (
     <form className="real-estate-form" onSubmit={handlePost}>
       <div className="bold-30 text-center mb-3">Thêm bất động sản</div>
+      <div className="section d-flex flex-column gap-2">
+        <input
+          type="tel"
+          name="phoneseller"
+          placeholder="Số điện thoại"
+          className="form-control"
+          value={phoneseller}
+          onChange={(e) => setPhoneseller(e.target.value)}
+        />
+      </div>
 
       <div className="section d-flex flex-column gap-2">
         <div className="bold-20">Địa chỉ Bất Động Sản và Hình ảnh</div>
@@ -126,7 +142,11 @@ const Post: React.FC<PostProps> = ({ setShowPost }) => {
           onChange={(e) => setPropertyType(e.target.value)}
         />
 
-        <button type="button" className="btn btn-primary" onClick={() => document.getElementById("imageUpload")?.click()}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => document.getElementById("imageUpload")?.click()}
+        >
           Thêm ảnh
         </button>
         <input
@@ -141,8 +161,17 @@ const Post: React.FC<PostProps> = ({ setShowPost }) => {
         <div className="image-preview d-flex flex-wrap gap-2 mt-3">
           {selectedImages.map((image, index) => (
             <div key={index} className="image-item position-relative">
-              <img src={image.url} alt={`preview-${index}`} className="selected-image" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
-              <button type="button" className="btn-close position-absolute top-0 end-0" onClick={() => handleRemoveImage(index)}></button>
+              <img
+                src={image.url}
+                alt={`preview-${index}`}
+                className="selected-image"
+                style={{ width: "100px", height: "100px", objectFit: "cover" }}
+              />
+              <button
+                type="button"
+                className="btn-close position-absolute top-0 end-0"
+                onClick={() => handleRemoveImage(index)}
+              ></button>
             </div>
           ))}
         </div>
@@ -298,10 +327,16 @@ const Post: React.FC<PostProps> = ({ setShowPost }) => {
         />
       </div>
 
-        <div className="form-actions d-flex gap-3">
-        <button type="submit" className="btn btn btn-outline-primary">Đăng tin</button>
+      <div className="form-actions d-flex gap-3">
+        <button type="submit" className="btn btn btn-outline-primary">
+          Đăng tin
+        </button>
         {setShowPost && (
-          <button type="button" className="btn btn-outline-secondary" onClick={handleCancel}>
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={handleCancel}
+          >
             Quay lại trang chủ
           </button>
         )}
