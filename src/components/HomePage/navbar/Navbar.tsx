@@ -52,7 +52,7 @@ function Navbar() {
   const isPostPage = location.pathname === "/post";
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
       <div className="container-fluid d-flex justify-content-between align-items-center">
         <div className="navbar-brand d-flex align-items-center">
           <img
