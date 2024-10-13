@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
           onError={() => setLoading(false)}
         />
         <div className="content-box">
-          <div className="container py-5">
+          <div className="container py-2">
             <div className="row">
               <div className="col-md-4">
                 <img src={logo} alt="logo" className="footer-logo mb-3" />
