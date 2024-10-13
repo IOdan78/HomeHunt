@@ -16,9 +16,12 @@ function App() {
     window.scrollTo(0, 0);
   }, [location]);
 
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/register";
+
   return (
     <div>
-      <Navbar />
+      {!isAuthPage && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -27,7 +30,7 @@ function App() {
         <Route path="/products" element={<Product />} />
         <Route path="/product/:id" element={<ProductDetail />} />
       </Routes>
-      <Footer />
+      {!isAuthPage && <Footer />}
     </div>
   );
 }
