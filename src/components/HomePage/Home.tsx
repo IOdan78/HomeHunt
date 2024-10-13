@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./Home.scss";
-import Navbar from "./navbar/Navbar";
 import Body from "./Body/Body";
-import Post from "./Post/Post";
-import Footer from "./Footer/Footer";
 
 function Home() {
-  const [showPost, setShowPost] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Cuộn lên đầu trang khi component được render
     window.scrollTo(0, 0);
-    
     const handleLoad = () => {
       setLoading(false);
     };
@@ -40,14 +35,10 @@ function Home() {
         }
       });
     }
-  }, [showPost]);
+  }, []);
 
   return (
     <div className="homepage">
-      <div className="header">
-        <Navbar setShowPost={setShowPost} />
-      </div>
-
       <div className="body">
         {loading ? (
           <div className="loading-container">
@@ -55,19 +46,15 @@ function Home() {
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
-        ) : showPost ? (
-          <Post setShowPost={setShowPost} />
         ) : (
-          <Body setShowPost={setShowPost} />
+          <Body />
         )}
       </div>
 
       {/* Đảm bảo footer không bị đẩy lên trên navbar */}
-      {loading && <div className="footer-placeholder" style={{ height: '60px' }} />}
-      
-      <div className="footer">
-        <Footer />
-      </div>
+      {loading && (
+        <div className="footer-placeholder" style={{ height: "60px" }} />
+      )}
     </div>
   );
 }

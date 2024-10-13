@@ -5,11 +5,7 @@ import "./Navbar.scss";
 import Logo from "../../../assets/images/Logo.svg";
 import PostIcon from "../../../assets/images/Post.svg";
 
-interface NavbarProps {
-  setShowPost: (show: boolean) => void;
-}
-
-function Navbar({ setShowPost }: NavbarProps) {
+function Navbar() {
   const { isLoggedIn, setIsLoggedIn } = useLogin();
   const navigate = useNavigate();
   const location = useLocation(); // Lấy thông tin về đường dẫn hiện tại
@@ -29,7 +25,6 @@ function Navbar({ setShowPost }: NavbarProps) {
   };
 
   const handleLogoClick = () => {
-    setShowPost(false); // Quay lại body khi nhấn vào logo hoặc tên
     navigate("/"); // Điều hướng về trang chủ
   };
 
@@ -38,15 +33,17 @@ function Navbar({ setShowPost }: NavbarProps) {
   };
 
   const handlePostClick = () => {
-    setShowPost(true); 
+    navigate(`/post`);
   };
 
   const handleRedirect = () => {
-    window.location.href = 'https://www.facebook.com/profile.php?id=100083381929647&mibextid=LQQJ4d&rdid=BhXYaU2RqY8oCPny&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FDB7tKaK47H1zKzxa%2F%3Fmibextid%3DLQQJ4d';
+    window.location.href =
+      "https://www.facebook.com/profile.php?id=100083381929647&mibextid=LQQJ4d&rdid=BhXYaU2RqY8oCPny&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FDB7tKaK47H1zKzxa%2F%3Fmibextid%3DLQQJ4d";
   };
 
   const handleChat = () => {
-    window.location.href = 'https://www.facebook.com/messages/t/100343929395378';
+    window.location.href =
+      "https://www.facebook.com/messages/t/100343929395378";
   };
 
   const isPostPage = location.pathname === "/post";
@@ -72,17 +69,23 @@ function Navbar({ setShowPost }: NavbarProps) {
 
         <div className={`navbar-collapse ${isMenuOpen ? "show" : ""}`}>
           <div className="navbar-icons d-flex align-items-center">
-            <div className="social-icons">            
-            <i className="bi bi-people-fill navbar-icon"></i>
+            <div className="social-icons">
+              <i className="bi bi-people-fill navbar-icon"></i>
 
-            <i className="bi bi-send-fill navbar-icon"></i>
+              <i className="bi bi-send-fill navbar-icon"></i>
 
-            <i className="bi bi-chat-dots-fill navbar-icon" onClick={handleChat}></i>
+              <i
+                className="bi bi-chat-dots-fill navbar-icon"
+                onClick={handleChat}
+              ></i>
 
-            <i className="bi bi-person-circle navbar-icon"></i>
+              <i className="bi bi-person-circle navbar-icon"></i>
 
-            <i className="bi bi-globe2 navbar-icon" onClick={handleRedirect}></i></div>
-
+              <i
+                className="bi bi-globe2 navbar-icon"
+                onClick={handleRedirect}
+              ></i>
+            </div>
           </div>
 
           <div className="navbar-icons d-flex align-items-center">

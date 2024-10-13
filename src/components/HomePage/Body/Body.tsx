@@ -10,13 +10,15 @@ import List from "../../../assets/images/List.svg";
 import Luggage from "../../../assets/images/Luggage.svg";
 import LazyLoad from "react-lazyload";
 import Product from "./product/Product";
+import { useNavigate } from "react-router-dom";
 
-interface BodyProps {
-  setShowPost: (show: boolean) => void;
-}
-
-const Body: React.FC<BodyProps> = ({ setShowPost }) => {
+const Body: React.FC = () => {
   const [loading, setLoading] = useState(true); // Track loading state
+  const navigate = useNavigate();
+
+  const handlePost = () => {
+    navigate(`/post`);
+  };
 
   return (
     <div className="body">
@@ -33,9 +35,9 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
             src={Background}
             alt="Background"
             className="position-absolute w-100 img-fluid"
-            style={{ display: loading ? "none" : "block" }} 
-            onLoad={() => setLoading(false)} 
-            onError={() => setLoading(false)} 
+            style={{ display: loading ? "none" : "block" }}
+            onLoad={() => setLoading(false)}
+            onError={() => setLoading(false)}
           />
         </LazyLoad>
         <div className="content-wrapper d-flex justify-content-center align-items-center">
@@ -177,7 +179,7 @@ const Body: React.FC<BodyProps> = ({ setShowPost }) => {
           <button
             type="button"
             className="btn btn-primary px-5 py-3 mb-5"
-            onClick={() => setShowPost(true)}
+            onClick={handlePost}
           >
             Cho thuê
           </button>

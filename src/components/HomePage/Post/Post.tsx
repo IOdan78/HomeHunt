@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Post.scss";
 
-interface PostProps {
-  setShowPost?: (show: boolean) => void;
-}
 
-const Post: React.FC<PostProps> = ({ setShowPost }) => {
+const Post: React.FC = () => {
   const [phoneseller, setPhoneseller] = useState("");
   const [buildingName, setBuildingName] = useState("");
   const [address, setAddress] = useState("");
@@ -94,11 +91,7 @@ const Post: React.FC<PostProps> = ({ setShowPost }) => {
   };
 
   const handleCancel = () => {
-    if (setShowPost) {
-      setShowPost(false);
-    } else {
       navigate("/");
-    }
   };
 
   return (
@@ -331,7 +324,7 @@ const Post: React.FC<PostProps> = ({ setShowPost }) => {
         <button type="submit" className="btn btn btn-outline-primary">
           Đăng tin
         </button>
-        {setShowPost && (
+        {(
           <button
             type="button"
             className="btn btn-outline-secondary"

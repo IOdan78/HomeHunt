@@ -4,10 +4,6 @@
   display: flex;
   flex-direction: column;
 
-  .header {
-    flex-shrink: 0; // Ensures the header stays at the top
-  }
-
   .body {
     flex-grow: 1; // Ensures the body takes up the remaining space
     position: relative;
@@ -18,15 +14,6 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-    }
-  }
-
-  .footer {
-    flex-shrink: 0; // Keeps footer at the bottom
-    margin-top: auto; // Pushes footer down to the bottom when content is small
-    .footer-placeholder {
-      height: 60px; /* Chiều cao này nên bằng chiều cao của Footer */
-      background: transparent; /* Có thể thay đổi nếu cần */
     }
   }
 }
