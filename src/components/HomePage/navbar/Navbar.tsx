@@ -37,15 +37,18 @@ function Navbar() {
   };
 
   const handleRedirect = () => {
-    window.location.href =
-      "https://www.facebook.com/profile.php?id=100083381929647&mibextid=LQQJ4d&rdid=BhXYaU2RqY8oCPny&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FDB7tKaK47H1zKzxa%2F%3Fmibextid%3DLQQJ4d";
+    window.open(
+      "https://www.facebook.com/profile.php?id=100083381929647&mibextid=LQQJ4d&rdid=BhXYaU2RqY8oCPny&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FDB7tKaK47H1zKzxa%2F%3Fmibextid%3DLQQJ4d",
+      "_blank"
+    );
   };
 
   const handleChat = () => {
-    window.location.href =
-      "https://www.facebook.com/messages/t/100343929395378";
+    window.open(
+      "https://www.facebook.com/messages/t/100343929395378",
+      "_blank"
+    );
   };
-
   const isPostPage = location.pathname === "/post";
 
   return (

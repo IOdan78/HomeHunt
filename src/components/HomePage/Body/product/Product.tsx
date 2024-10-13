@@ -41,7 +41,6 @@ const Product: React.FC = () => {
 
   return (
     <div className="container product-container">
-      <div className="bold-30 text-center mb-2">Đề xuất cho bạn</div>
       <div className="row mb-3">
         {displayProducts.map((product) => (
           <div className="col-md-3 mb-4" key={product.id}>

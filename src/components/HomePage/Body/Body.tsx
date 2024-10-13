@@ -40,25 +40,6 @@ const Body: React.FC = () => {
             onError={() => setLoading(false)}
           />
         </LazyLoad>
-        <div className="content-wrapper d-flex justify-content-center align-items-center">
-          <div className="search-box d-flex align-items-center">
-            <div className="location d-flex align-items-center justify-content-center">
-              <i className="bi bi-geo-alt-fill"></i>
-              <span>HCM</span>
-            </div>
-
-            <input
-              type="text"
-              placeholder="Tìm quận, tên đường"
-              className="search-input"
-            />
-
-            <button className="btn btn-outline-primary filter-button d-flex align-items-center justify-content-center">
-              <i className="bi bi-filter"></i>
-              <span>Bộ lọc</span>
-            </button>
-          </div>
-        </div>
       </div>
 
       <div className="container">
@@ -120,7 +101,29 @@ const Body: React.FC = () => {
         </div>
       </div>
 
-      <div className="mb-5">
+      {/* PRODUCT */}
+      <div className="mb-2">
+        <div className="content-wrapper d-flex flex-column justify-content-center align-items-center mb-5">
+          <div className="bold-30 text-center mb-2">Đề xuất cho bạn</div>
+          <div className="search-box d-flex align-items-center">
+            <div className="location d-flex align-items-center justify-content-center">
+              <i className="bi bi-geo-alt-fill"></i>
+              <span>HCM</span>
+            </div>
+
+            <input
+              type="text"
+              placeholder="Tìm quận, tên đường"
+              className="search-input"
+            />
+
+            <button className="btn btn-outline-primary filter-button d-flex align-items-center justify-content-center">
+              <i className="bi bi-filter"></i>
+              <span>Bộ lọc</span>
+            </button>
+          </div>
+        </div>
+
         <Product />
       </div>
 

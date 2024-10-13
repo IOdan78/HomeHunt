@@ -16,13 +16,7 @@
     height: 100%;
   }
 
-  .content-wrapper {
-    position: relative;
-    z-index: 1; // Đảm bảo các thẻ div luôn ở phía trên ảnh nền
-  }
-
   .search-box {
-    margin-top: 490px;
     width: 100%;
     max-width: 800px;
     background-color: white;
@@ -141,10 +135,6 @@
   @media (min-width: 1200px) {
     .content-wrapper {
       margin-top: 50px; // Adjust this to ensure the elements maintain proper spacing
-    }
-
-    .search-box {
-      margin-top: 20%; // Adjust to keep the search box properly aligned on larger screens
     }
   }
 

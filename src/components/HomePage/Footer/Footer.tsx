@@ -7,8 +7,10 @@ const Footer: React.FC = () => {
   const [loading, setLoading] = useState(true); // Track loading state
 
   const handleRedirect = () => {
-    window.location.href =
-      "https://www.facebook.com/profile.php?id=100083381929647&mibextid=LQQJ4d&rdid=BhXYaU2RqY8oCPny&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FDB7tKaK47H1zKzxa%2F%3Fmibextid%3DLQQJ4d";
+    window.open(
+      "https://www.facebook.com/profile.php?id=100083381929647&mibextid=LQQJ4d&rdid=BhXYaU2RqY8oCPny&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FDB7tKaK47H1zKzxa%2F%3Fmibextid%3DLQQJ4d",
+      "_blank"
+    );
   };
 
   return (
@@ -16,8 +18,6 @@ const Footer: React.FC = () => {
       <div className="footer-background">
         {loading && (
           <div className="loading-icon">
-            {" "}
-            {/* Placeholder for loading icon */}
             <span>Loading...</span>
           </div>
         )}
@@ -26,11 +26,11 @@ const Footer: React.FC = () => {
           alt="Footer background"
           className="footer-img"
           style={{ display: loading ? "none" : "block" }}
-          onLoad={() => setLoading(false)} 
-          onError={() => setLoading(false)} 
+          onLoad={() => setLoading(false)}
+          onError={() => setLoading(false)}
         />
         <div className="content-box">
-          <div className="container py-5 content">
+          <div className="container py-5">
             <div className="row">
               <div className="col-md-4">
                 <img src={logo} alt="logo" className="footer-logo mb-3" />
@@ -78,8 +78,6 @@ const Footer: React.FC = () => {
               <p className="mb-0">FOLLOW US</p>
               <div className="social-icons">
                 <i className="bi bi-facebook me-3" onClick={handleRedirect}></i>
-                <i className="bi bi-instagram me-3"></i>
-                <i className="bi bi-youtube"></i>
               </div>
             </div>
           </div>

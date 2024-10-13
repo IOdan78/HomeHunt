@@ -7,23 +7,25 @@
     position: relative;
     width: 100%;
     height: auto;
-    
+
     .footer-img {
       width: 100%;
       height: auto;
+      object-fit: cover; // Đảm bảo ảnh phủ toàn bộ
     }
 
     .content-box {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);  // Căn giữa nội dung với ảnh nền
-      background-color: rgba(255, 255, 255, 0.9);  // Màu nền trắng với độ trong suốt
-      border-radius: 15px;  // Bo tròn góc
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  // Tạo hiệu ứng đổ bóng
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
 
       .footer-logo {
-        width: 100px;  // Kích thước logo
+        width: 100px;
       }
 
       .social-icons {
@@ -37,15 +39,31 @@
         }
       }
 
-      // Footer bottom
       .footer-bottom {
-        width: 100%;  // Đặt chiều rộng bằng với content-box
+        width: 100%;
         background-color: $app-primary;
         color: #fff;
         padding: 1rem 0;
         text-align: center;
-        margin-top: 1rem; // Thêm khoảng cách trên để không chạm vào phần trên
-        border-radius: 0 0 15px 15px; // Bo tròn chỉ góc dưới cùng để khớp với box
+        margin-top: 1rem;
+        border-radius: 0 0 15px 15px;
+      }
+    }
+  }
+
+  // Responsive styles
+  @media (max-width: 768px) {
+    .content-box {
+      padding: 15px; // Giảm padding cho màn hình nhỏ
+    }
+
+    .footer-logo {
+      width: 80px; // Giảm kích thước logo cho màn hình nhỏ
+    }
+
+    .social-icons {
+      i {
+        font-size: 1.2rem; // Giảm kích thước icon cho màn hình nhỏ
       }
     }
   }
