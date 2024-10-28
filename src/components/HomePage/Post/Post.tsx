@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { storage } from './firebase'; // Import cấu hình Firebase của bạn
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import "./Post.scss";
 
 const Post: React.FC = () => {
@@ -20,13 +22,19 @@ const Post: React.FC = () => {
   const [deposit, setDeposit] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedImages, setSelectedImages] = useState<
-    { url: string; file: File }[]
-  >([]);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const navigate = useNavigate();
 
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Upload images to Firebase and get URLs
+    const imageUrls: string[] = await Promise.all(selectedImages.map(async (file) => {
+      const storageRef = ref(storage, `images/${file.name}`);
+      await uploadBytes(storageRef, file);
+      return await getDownloadURL(storageRef);
+    }));
+
     const postData = {
       phoneseller,
       buildingName,
@@ -45,7 +53,7 @@ const Post: React.FC = () => {
       deposit,
       postTitle,
       description,
-      images: selectedImages.map((image) => image.url), // Only the URLs for display purposes
+      images: imageUrls, // Use the URLs for the images
     };
 
     try {
@@ -75,16 +83,12 @@ const Post: React.FC = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const filesArray = Array.from(e.target.files).map((file) => ({
-        url: URL.createObjectURL(file),
-        file,
-      }));
+      const filesArray = Array.from(e.target.files);
       setSelectedImages((prevImages) => [...prevImages, ...filesArray]);
     }
   };
 
   const handleRemoveImage = (index: number) => {
-    URL.revokeObjectURL(selectedImages[index].url);
     setSelectedImages((prevImages) =>
       prevImages.filter((_, imgIndex) => imgIndex !== index)
     );
@@ -136,38 +140,38 @@ const Post: React.FC = () => {
         />
 
         <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => document.getElementById("imageUpload")?.click()}
-        >
-          Thêm ảnh
-        </button>
-        <input
-          type="file"
-          id="imageUpload"
-          style={{ display: "none" }}
-          multiple
-          accept="image/*"
-          onChange={handleImageChange}
-        />
+        type="button"
+        className="btn btn-primary"
+        onClick={() => document.getElementById("imageUpload")?.click()}
+      >
+        Thêm ảnh
+      </button>
+      <input
+        type="file"
+        id="imageUpload"
+        style={{ display: "none" }}
+        multiple
+        accept="image/*"
+        onChange={handleImageChange}
+      />
 
-        <div className="image-preview d-flex flex-wrap gap-2 mt-3">
-          {selectedImages.map((image, index) => (
-            <div key={index} className="image-item position-relative">
-              <img
-                src={image.url}
-                alt={`preview-${index}`}
-                className="selected-image"
-                style={{ width: "100px", height: "100px", objectFit: "cover" }}
-              />
-              <button
-                type="button"
-                className="btn-close position-absolute top-0 end-0"
-                onClick={() => handleRemoveImage(index)}
-              ></button>
-            </div>
-          ))}
-        </div>
+      <div className="image-preview d-flex flex-wrap gap-2 mt-3">
+        {selectedImages.map((image, index) => (
+          <div key={index} className="image-item position-relative">
+            <img
+              src={URL.createObjectURL(image)}
+              alt={`preview-${index}`}
+              className="selected-image"
+              style={{ width: "100px", height: "100px", objectFit: "cover" }}
+            />
+            <button
+              type="button"
+              className="btn-close position-absolute top-0 end-0"
+              onClick={() => handleRemoveImage(index)}
+            ></button>
+          </div>
+        ))}
+      </div>
       </div>
 
       {/* Vị trí Bất Động Sản */}
