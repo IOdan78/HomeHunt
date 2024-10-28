@@ -10,6 +10,7 @@ import LazyLoad from "react-lazyload";
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  
   const { setIsLoggedIn, setUserRole } = useLogin();
   const { isLoggedIn } = useLogin();
   const navigate = useNavigate();
@@ -23,24 +24,24 @@ const Login: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Username:", username, "Password:", password);
 
-    const response = await fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
+    try {
+      const response = await fetch("https://671ee00e1dfc429919834fc5.mockapi.io/users");
+      const users = await response.json();
 
-    const data = await response.json();
-    if (response.status === 200) {
-      setIsLoggedIn(true);
-      setUserRole(data.user.role);
-      localStorage.setItem("userRole", data.user.role);
-      navigate("/", { replace: true });
-    } else {
-      alert(data.message);
+      const user = users.find((user: any) => user.username === username && user.password === password);
+
+      if (user) {
+        setIsLoggedIn(true);
+        setUserRole(user.role);
+        localStorage.setItem("userRole", user.role);
+        navigate("/", { replace: true });
+      } else {
+        alert("Tên đăng nhập hoặc mật khẩu không đúng!");
+      }
+    } catch (error) {
+      console.error("Lỗi:", error);
+      alert("Đã xảy ra lỗi khi đăng nhập.");
     }
   };
 
@@ -75,7 +76,6 @@ const Login: React.FC = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="text"
                     placeholder="Tên đăng nhập"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
@@ -86,7 +86,6 @@ const Login: React.FC = () => {
                   <input
                     type="password"
                     className="form-control"
-                    id="password"
                     placeholder="Mật khẩu"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}

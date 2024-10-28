@@ -1,204 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./ProductDetail.scss";
-import Anh1 from "../../../../assets/images/anh1.webp";
-import Anh2 from "../../../../assets/images/anh2.webp";
-import Anh3 from "../../../../assets/images/anh3.webp";
-import Anh4 from "../../../../assets/images/anh4.webp";
-import Anh5 from "../../../../assets/images/anh5.webp";
+import { Button } from "react-bootstrap";
+
+interface Product {
+  id: number;
+  postTitle: string;
+  images: string[];
+  description: string;
+  rentPrice: string;
+  deposit: string;
+  area: string;
+  address: string;
+  propertyType: string;
+  bedrooms: string;
+  bathrooms: string;
+  phoneNumber: string;
+  [key: string]: any;
+}
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [mainImage, setMainImage] = useState<string>(""); // Default to empty string
 
-  const allProducts = [
-    {
-      id: 1,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 2,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 3,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 4,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 5,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 6,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 7,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 8,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 9,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 10,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 11,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-    {
-      id: 12,
-      title: "Product 1",
-      images: [
-        { src: Anh1, alt: "Image 1A" },
-        { src: Anh2, alt: "Image 1B" },
-        { src: Anh3, alt: "Image 1C" },
-        { src: Anh4, alt: "Image 1D" },
-        { src: Anh5, alt: "Image 1E" },
-      ],
-      price: "200,000 VND",
-      description: "This is a description for Product 1.",
-      phoneNumber: "0987654321",
-    },
-  ];
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(
+          `https://671ee00e1dfc429919834fc5.mockapi.io/products/${id}`
+        );
+        const data = await response.json();
+        setProduct(data);
+        setMainImage(data.images[0] || ""); // Set first image as main image or empty string if none
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+    fetchProduct();
+  }, [id]);
 
-  const product = allProducts.find((p) => p.id === Number(id));
-
-  const [mainImage, setMainImage] = useState(product?.images[0].src);
-  const [showPhone, setShowPhone] = useState(false);
-
-  if (!product) {
-    return <div>Product not found!</div>;
-  }
-
-  const phoneNumber = product.phoneNumber;
-  const maskedPhone = `${phoneNumber.slice(0, -3)}***`; // Masking the last 3 digits of the phone number
+  if (!product) return <div>Loading...</div>;
 
   const handleThumbnailClick = (src: string) => {
-    setMainImage(src); // Change the main image source
-  };
-
-  const handleShowPhone = () => {
-    setShowPhone(true);
+    setMainImage(src);
   };
 
   return (
@@ -208,38 +53,43 @@ const ProductDetail: React.FC = () => {
         <div className="col-md-8">
           <div className="product-image">
             <div className="main-image">
-              <img src={mainImage} alt="Main Product" />
+              <img src={mainImage || ""} alt="Main Product" />
             </div>
-
             <div className="thumbnails d-flex mt-2">
               {product.images.map((image, index) => (
                 <img
                   key={index}
-                  src={image.src}
-                  alt={image.alt}
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
                   className="thumbnail-image img-thumbnail"
-                  onClick={() => handleThumbnailClick(image.src)}
+                  onClick={() => handleThumbnailClick(image)}
                 />
               ))}
             </div>
+          </div>
+
+          {/* New Box with Additional Information */}
+          <div className="additional-info card p-3 mt-3">
+            <p><strong>Price:</strong> {product.rentPrice}</p>
+            <p><strong>Deposit:</strong> {product.deposit}</p>
+            <p><strong>Area:</strong> {product.area}</p>
+            <p><strong>Address:</strong> {product.address}</p>
+            <p><strong>Property Type:</strong> {product.propertyType}</p>
+            <p><strong>Bedrooms:</strong> {product.bedrooms}</p>
+            <p><strong>Bathrooms:</strong> {product.bathrooms}</p>
           </div>
         </div>
 
         {/* Product Info Section */}
         <div className="col-md-4">
           <div className="info-box p-3 border">
-            <h1 className="product-title">{product.title}</h1>
-            <div className="product-price">{product.price}</div>
+            <h1 className="product-title">{product.postTitle}</h1>
             <div className="product-description">{product.description}</div>
 
-            {/* Button to Show Phone */}
-            <button
-              className="btn btn-primary w-100 mb-3"
-              onClick={handleShowPhone}
-            >
-              {showPhone ? phoneNumber : `Bấm vào để hiện SĐT ${maskedPhone}`}
-            </button>
-            <button className="btn btn-outline-primary w-100">Chat</button>
+            <Button variant="success" className="w-100 my-2">
+              <i className="bi bi-phone"></i> {product.phoneNumber}
+            </Button>
+            <Button variant="primary" className="w-100">Chat</Button>
           </div>
         </div>
       </div>

@@ -13,6 +13,9 @@ const Register: React.FC = () => {
   const [phone, setPhone] = useState<number | undefined>(undefined);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [role] = useState("Customer");
+
+  
   const { isLoggedIn } = useLogin();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -36,12 +39,12 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/register", {
+      const response = await fetch("https://671ee00e1dfc429919834fc5.mockapi.io/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, fullname, phone, password }),
+        body: JSON.stringify({ username, fullname, phone, password, role }),
       });
 
       const data = await response.json();

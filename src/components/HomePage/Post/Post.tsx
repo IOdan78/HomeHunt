@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Post.scss";
 
-
 const Post: React.FC = () => {
   const [phoneseller, setPhoneseller] = useState("");
   const [buildingName, setBuildingName] = useState("");
@@ -28,37 +27,38 @@ const Post: React.FC = () => {
 
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData();
-
-    // Append all the text fields
-    formData.append("phoneseller", phoneseller);
-    formData.append("buildingName", buildingName);
-    formData.append("address", address);
-    formData.append("propertyType", propertyType);
-    formData.append("apartmentNumber", apartmentNumber);
-    formData.append("block", block);
-    formData.append("floor", floor);
-    formData.append("apartmentType", apartmentType);
-    formData.append("bedrooms", bedrooms);
-    formData.append("bathrooms", bathrooms);
-    formData.append("legalDocument", legalDocument);
-    formData.append("furnitureCondition", furnitureCondition);
-    formData.append("area", area);
-    formData.append("rentPrice", rentPrice);
-    formData.append("deposit", deposit);
-    formData.append("postTitle", postTitle);
-    formData.append("description", description);
-
-    // Append images
-    selectedImages.forEach((image, index) => {
-      formData.append(`image_${index}`, image.file);
-    });
+    const postData = {
+      phoneseller,
+      buildingName,
+      address,
+      propertyType,
+      apartmentNumber,
+      block,
+      floor,
+      apartmentType,
+      bedrooms,
+      bathrooms,
+      legalDocument,
+      furnitureCondition,
+      area,
+      rentPrice,
+      deposit,
+      postTitle,
+      description,
+      images: selectedImages.map((image) => image.url), // Only the URLs for display purposes
+    };
 
     try {
-      const response = await fetch("http://localhost:5000/post", {
-        method: "POST",
-        body: formData, // Send as multipart/form-data
-      });
+      const response = await fetch(
+        "https://671ee00e1dfc429919834fc5.mockapi.io/products",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        }
+      );
 
       const data = await response.json();
       if (response.status === 201) {
@@ -91,7 +91,7 @@ const Post: React.FC = () => {
   };
 
   const handleCancel = () => {
-      navigate("/");
+    navigate("/");
   };
 
   return (
@@ -324,7 +324,7 @@ const Post: React.FC = () => {
         <button type="submit" className="btn btn btn-outline-primary">
           Đăng tin
         </button>
-        {(
+        {
           <button
             type="button"
             className="btn btn-outline-secondary"
@@ -332,7 +332,7 @@ const Post: React.FC = () => {
           >
             Quay lại trang chủ
           </button>
-        )}
+        }
       </div>
     </form>
   );
