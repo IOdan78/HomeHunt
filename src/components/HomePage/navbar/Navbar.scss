@@ -83,7 +83,7 @@
     align-items: center;
   }
 
-  @media (max-width: 992px) {
+  @media (max-width: 768px) {
     .navbar-icons {
       margin-left: 20px;
       flex-direction: column;
@@ -107,27 +107,5 @@
       display: block;
     }
 
-  }
-
-  @media (max-width: 576px) {
-    padding: 0.5rem 1rem;
-
-    .navbar-brand {
-      .fs-4 {
-        font-size: 1.2rem;
-      }
-    }
-
-    .navbar-icons {
-      .navbar-icon,
-      .navbar-icon-profile {
-        width: 25px;
-      }
-    }
-
-    .btn-orange {
-      font-size: 0.9rem;
-      padding: 0.3rem 0.8rem;
-    }
   }
 }

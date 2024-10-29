@@ -56,7 +56,7 @@ const Body: React.FC = () => {
                 />
               </div>
               <div className="bold-25">Sơ đồ và chi tiết phòng</div>
-              <div className="light-14">
+              <div className="light-14 mb-5">
                 Nhận biết số phòng, hướng, sơ đồ tầng và bạn cùng phòng.
               </div>
             </div>
@@ -69,7 +69,7 @@ const Body: React.FC = () => {
                 />
               </div>
               <div className="bold-25">Được xác minh 100%</div>
-              <div className="light-14">
+              <div className="light-14 mb-5">
                 Bạn sẽ nhận được những gì như đã hứa.
               </div>
             </div>
@@ -82,7 +82,7 @@ const Body: React.FC = () => {
                 />
               </div>
               <div className="bold-25">Giá thành được đảm bảo</div>
-              <div className="light-14">
+              <div className="light-14 mb-5">
                 Sẽ tìm được mức giá tốt nhất cho bạn.
               </div>
             </div>
@@ -95,7 +95,7 @@ const Body: React.FC = () => {
                 />
               </div>
               <div className="bold-25">Chăm sóc khách hàng 1v1</div>
-              <div className="light-14">Sẽ hỗ trợ bạn mọi thời điểm.</div>
+              <div className="light-14 mb-5">Sẽ hỗ trợ bạn mọi thời điểm.</div>
             </div>
           </div>
         </div>
@@ -141,7 +141,7 @@ const Body: React.FC = () => {
                 />
               </div>
               <div className="bold-25">Tìm kiếm và đảm bảo</div>
-              <div className="light-14">Xác minh nơi ở bạn chọn.</div>
+              <div className="light-14 mb-5">Xác minh nơi ở bạn chọn.</div>
             </div>
             <div className="col-md-4 feature-item">
               <div className="icon-container">
@@ -152,7 +152,7 @@ const Body: React.FC = () => {
                 />
               </div>
               <div className="bold-25">Hoàn thành đơn đăng ký</div>
-              <div className="light-14">
+              <div className="light-14 mb-5">
                 Hãy để chúng tôi lo vấn đề giấy tờ.
               </div>
             </div>
@@ -165,7 +165,7 @@ const Body: React.FC = () => {
                 />
               </div>
               <div className="bold-25">Tìm nhà hoàn tất</div>
-              <div className="light-14">
+              <div className="light-14 mb-5">
                 Giờ thì đến điểm hẹn nhận nhà mới thôi.
               </div>
             </div>
