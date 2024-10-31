@@ -1,6 +1,10 @@
 @import "../../../../assets/styles/variables";
 
 .product-container {
+  .card-img-top{
+    width: auto;
+    height: 300px;
+  }
   .button-container {
     display: flex;
     justify-content: space-around;

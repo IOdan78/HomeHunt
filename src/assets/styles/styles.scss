@@ -21,14 +21,12 @@
     border-color: $app-primary;
 }
 
-@media (max-width: 768px) {
-    .btn:hover{
-        background-color: none;
-        color: none;
-    }
-}
-
 .btn:focus:active{
     background-color: $app-primary;
     border-color: $app-primary;
+}
+
+.btn-link{
+    background-color: none;
+    color: $app-primary;
 }

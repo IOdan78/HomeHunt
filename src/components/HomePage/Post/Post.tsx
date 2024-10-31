@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { storage } from './firebase'; // Import cấu hình Firebase của bạn
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from "./firebase"; // Import cấu hình Firebase của bạn
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import "./Post.scss";
 
 const Post: React.FC = () => {
@@ -24,16 +24,19 @@ const Post: React.FC = () => {
   const [description, setDescription] = useState("");
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Upload images to Firebase and get URLs
-    const imageUrls: string[] = await Promise.all(selectedImages.map(async (file) => {
-      const storageRef = ref(storage, `images/${file.name}`);
-      await uploadBytes(storageRef, file);
-      return await getDownloadURL(storageRef);
-    }));
+    const imageUrls: string[] = await Promise.all(
+      selectedImages.map(async (file) => {
+        const storageRef = ref(storage, `images/${file.name}`);
+        await uploadBytes(storageRef, file);
+        return await getDownloadURL(storageRef);
+      })
+    );
 
     const postData = {
       phoneseller,
@@ -94,6 +97,12 @@ const Post: React.FC = () => {
     );
   };
 
+  const handleClick = async () => {
+    setIsLoading(true); // Hiện icon loading
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Giả lập thời gian xử lý
+    setIsLoading(false); // Ẩn icon loading sau khi hoàn thành
+  };
+
   const handleCancel = () => {
     navigate("/");
   };
@@ -140,38 +149,38 @@ const Post: React.FC = () => {
         />
 
         <button
-        type="button"
-        className="btn btn-primary"
-        onClick={() => document.getElementById("imageUpload")?.click()}
-      >
-        Thêm ảnh
-      </button>
-      <input
-        type="file"
-        id="imageUpload"
-        style={{ display: "none" }}
-        multiple
-        accept="image/*"
-        onChange={handleImageChange}
-      />
+          type="button"
+          className="btn btn-primary"
+          onClick={() => document.getElementById("imageUpload")?.click()}
+        >
+          Thêm ảnh
+        </button>
+        <input
+          type="file"
+          id="imageUpload"
+          style={{ display: "none" }}
+          multiple
+          accept="image/*"
+          onChange={handleImageChange}
+        />
 
-      <div className="image-preview d-flex flex-wrap gap-2 mt-3">
-        {selectedImages.map((image, index) => (
-          <div key={index} className="image-item position-relative">
-            <img
-              src={URL.createObjectURL(image)}
-              alt={`preview-${index}`}
-              className="selected-image"
-              style={{ width: "100px", height: "100px", objectFit: "cover" }}
-            />
-            <button
-              type="button"
-              className="btn-close position-absolute top-0 end-0"
-              onClick={() => handleRemoveImage(index)}
-            ></button>
-          </div>
-        ))}
-      </div>
+        <div className="image-preview d-flex flex-wrap gap-2 mt-3">
+          {selectedImages.map((image, index) => (
+            <div key={index} className="image-item position-relative">
+              <img
+                src={URL.createObjectURL(image)}
+                alt={`preview-${index}`}
+                className="selected-image"
+                style={{ width: "100px", height: "100px", objectFit: "cover" }}
+              />
+              <button
+                type="button"
+                className="btn-close position-absolute top-0 end-0"
+                onClick={() => handleRemoveImage(index)}
+              ></button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Vị trí Bất Động Sản */}
@@ -325,9 +334,20 @@ const Post: React.FC = () => {
       </div>
 
       <div className="form-actions d-flex gap-3">
-        <button type="submit" className="btn btn btn-outline-primary">
+        <button
+          type="submit"
+          className="btn btn btn-outline-primary"
+          onClick={handleClick}
+        >
           Đăng tin
         </button>
+        {isLoading && (
+          <div className="loading-overlay">
+            <div className="spinner-border text-light" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
         {
           <button
             type="button"

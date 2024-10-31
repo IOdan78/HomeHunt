@@ -31,6 +31,10 @@ const Product: React.FC = () => {
     setExpanded(false);
   };
 
+  const togglediscription = () =>{
+    setExpanded(!expanded)
+  }
+
   const displayProducts = allProducts.slice(0, visibleProducts);
 
   const handleProductClick = (id: number) => {
@@ -54,7 +58,9 @@ const Product: React.FC = () => {
               />
               <div className="card-body">
                 <h5 className="card-title">{product.postTitle}</h5>
-                <p className="card-text">{product.description}</p>
+                <p className="card-text">Giá thuê: {product.rentPrice}</p>
+                <p className="card-text">Mô tả: { expanded ? product.description : `${product.description.slice(0, 50)}...`}</p>
+                <button className="btn btn-outline-primary p-2" onClick={togglediscription}>{expanded ? 'Thu gọn' : 'Xem thêm'}</button>
               </div>
             </div>
           </div>
