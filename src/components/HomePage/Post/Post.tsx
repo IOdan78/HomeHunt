@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { storage } from "./firebase"; // Import cấu hình Firebase của bạn
+import { storage } from "./firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import "./Post.scss";
 
@@ -23,43 +23,44 @@ const Post: React.FC = () => {
   const [postTitle, setPostTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Upload images to Firebase and get URLs
-    const imageUrls: string[] = await Promise.all(
-      selectedImages.map(async (file) => {
-        const storageRef = ref(storage, `images/${file.name}`);
-        await uploadBytes(storageRef, file);
-        return await getDownloadURL(storageRef);
-      })
-    );
-
-    const postData = {
-      phoneseller,
-      buildingName,
-      address,
-      propertyType,
-      apartmentNumber,
-      block,
-      floor,
-      apartmentType,
-      bedrooms,
-      bathrooms,
-      legalDocument,
-      furnitureCondition,
-      area,
-      rentPrice,
-      deposit,
-      postTitle,
-      description,
-      images: imageUrls, // Use the URLs for the images
-    };
+    setIsLoading(true); // Start loading
 
     try {
+      // Upload images to Firebase and get URLs
+      const imageUrls: string[] = await Promise.all(
+        selectedImages.map(async (file) => {
+          const storageRef = ref(storage, `images/${file.name}`);
+          await uploadBytes(storageRef, file);
+          return await getDownloadURL(storageRef);
+        })
+      );
+
+      const postData = {
+        phoneseller,
+        buildingName,
+        address,
+        propertyType,
+        apartmentNumber,
+        block,
+        floor,
+        apartmentType,
+        bedrooms,
+        bathrooms,
+        legalDocument,
+        furnitureCondition,
+        area,
+        rentPrice,
+        deposit,
+        postTitle,
+        description,
+        images: imageUrls,
+      };
+
       const response = await fetch(
         "https://671ee00e1dfc429919834fc5.mockapi.io/products",
         {
@@ -81,6 +82,8 @@ const Post: React.FC = () => {
     } catch (error) {
       console.error("Lỗi:", error);
       alert("Đã xảy ra lỗi khi đăng tin.");
+    } finally {
+      setIsLoading(false); // End loading after alert and navigation
     }
   };
 
@@ -95,12 +98,6 @@ const Post: React.FC = () => {
     setSelectedImages((prevImages) =>
       prevImages.filter((_, imgIndex) => imgIndex !== index)
     );
-  };
-
-  const handleClick = async () => {
-    setIsLoading(true); // Hiện icon loading
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Giả lập thời gian xử lý
-    setIsLoading(false); // Ẩn icon loading sau khi hoàn thành
   };
 
   const handleCancel = () => {
@@ -334,11 +331,7 @@ const Post: React.FC = () => {
       </div>
 
       <div className="form-actions d-flex gap-3">
-        <button
-          type="submit"
-          className="btn btn btn-outline-primary"
-          onClick={handleClick}
-        >
+        <button type="submit" className="btn btn btn-outline-primary">
           Đăng tin
         </button>
         {isLoading && (
@@ -348,15 +341,13 @@ const Post: React.FC = () => {
             </div>
           </div>
         )}
-        {
-          <button
-            type="button"
-            className="btn btn-outline-secondary"
-            onClick={handleCancel}
-          >
-            Quay lại trang chủ
-          </button>
-        }
+        <button
+          type="button"
+          className="btn btn-outline-secondary"
+          onClick={handleCancel}
+        >
+          Quay lại trang chủ
+        </button>
       </div>
     </form>
   );
