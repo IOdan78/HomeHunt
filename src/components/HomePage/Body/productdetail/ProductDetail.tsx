@@ -15,14 +15,15 @@ interface Product {
   propertyType: string;
   bedrooms: string;
   bathrooms: string;
-  phoneNumber: string;
+  phoneseller: string;
   [key: string]: any;
 }
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
-  const [mainImage, setMainImage] = useState<string>(""); // Default to empty string
+  const [mainImage, setMainImage] = useState<string>("");
+  const [showPhone, setShowPhone] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -44,6 +45,10 @@ const ProductDetail: React.FC = () => {
 
   const handleThumbnailClick = (src: string) => {
     setMainImage(src);
+  };
+
+  const handlePhoneClick = () => {
+    setShowPhone(true);
   };
 
   return (
@@ -70,13 +75,32 @@ const ProductDetail: React.FC = () => {
 
           {/* New Box with Additional Information */}
           <div className="additional-info card p-3 mt-3">
-            <p><strong>Price:</strong> {product.rentPrice}</p>
-            <p><strong>Deposit:</strong> {product.deposit}</p>
-            <p><strong>Area:</strong> {product.area}</p>
-            <p><strong>Address:</strong> {product.address}</p>
-            <p><strong>Property Type:</strong> {product.propertyType}</p>
-            <p><strong>Bedrooms:</strong> {product.bedrooms}</p>
-            <p><strong>Bathrooms:</strong> {product.bathrooms}</p>
+            <p>
+              <strong>Mô tả:</strong> {product.description}
+            </p>
+
+            <div className="d-flex justify-content-between">
+              <div className="flex-grow-1 me-3">
+                <p>
+                  <strong>Area:</strong> {product.area}
+                </p>
+                <p>
+                  <strong>Property Type:</strong> {product.propertyType}
+                </p>
+              </div>
+              <div className="flex-grow-1">
+                <p>
+                  <strong>Bedrooms:</strong> {product.bedrooms}
+                </p>
+                <p>
+                  <strong>Bathrooms:</strong> {product.bathrooms}
+                </p>
+              </div>
+            </div>
+
+            <p>
+              <strong>Address:</strong> {product.address}
+            </p>
           </div>
         </div>
 
@@ -84,12 +108,24 @@ const ProductDetail: React.FC = () => {
         <div className="col-md-4">
           <div className="info-box p-3 border">
             <h1 className="product-title">{product.postTitle}</h1>
-            <div className="product-description">{product.description}</div>
+            <div className="d-flex">
+              <div className="product-description">
+                <strong className="me-1">Price:</strong>
+                {product.rentPrice}
+              </div>
+              <div className="product-description ms-5">
+                <strong className="me-1">Deposit:</strong>
+                {product.deposit}
+              </div>
+            </div>
 
-            <Button variant="success" className="w-100 my-2">
-              <i className="bi bi-phone"></i> {product.phoneNumber}
+            <Button
+              variant="success"
+              className="w-100 my-2"
+              onClick={handlePhoneClick}
+            >
+              {showPhone ? product.phoneseller : "Bấm vào để xem sđt"}
             </Button>
-            <Button variant="primary" className="w-100">Chat</Button>
           </div>
         </div>
       </div>
