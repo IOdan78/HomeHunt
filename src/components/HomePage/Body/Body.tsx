@@ -13,7 +13,7 @@ import Product from "./product/Product";
 import { useNavigate } from "react-router-dom";
 
 const Body: React.FC = () => {
-  const [loading, setLoading] = useState(true); // Track loading state
+  const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
 
   const handlePost = () => {

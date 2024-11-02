@@ -7,6 +7,7 @@ const Product: React.FC = () => {
   const [allProducts, setAllProducts] = useState<any[]>([]); // Set initial state to empty array
   const [visibleProducts, setVisibleProducts] = useState(8);
   const [expanded, setExpanded] = useState(false);
+  const [isexpanded, setIsexpanded] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,7 +33,7 @@ const Product: React.FC = () => {
   };
 
   const togglediscription = () =>{
-    setExpanded(!expanded)
+    setIsexpanded(!isexpanded)
   }
 
   const displayProducts = allProducts.slice(0, visibleProducts);
@@ -57,10 +58,10 @@ const Product: React.FC = () => {
                 alt={product.title}
               />
               <div className="card-body">
-                <h5 className="card-title">{product.postTitle}</h5>
+                <div className="card-title bold-20 text-truncate">{product.postTitle}</div>
                 <p className="card-text">Giá thuê: {product.rentPrice}</p>
-                <p className="card-text">Mô tả: { expanded ? product.description : `${product.description.slice(0, 50)}...`}</p>
-                <button className="btn btn-outline-primary p-2" onClick={togglediscription}>{expanded ? 'Thu gọn' : 'Xem thêm'}</button>
+                <p className="card-text">Mô tả: { isexpanded ? product.description : `${product.description.slice(0, 50)}...`}</p>
+                <button className="btn btn-outline-primary p-2" onClick={togglediscription}>{'Xem thêm'}</button>
               </div>
             </div>
           </div>
