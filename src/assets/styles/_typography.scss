@@ -18,6 +18,10 @@
   @include font-style(500, 25px, 120%);
 }
 
+.bold-22{
+  @include font-style(500, 22px, 120%)
+}
+
 .bold-20{
   @include font-style(500, 20px, 120%)
 }

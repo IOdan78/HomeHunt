@@ -58,7 +58,7 @@ const Product: React.FC = () => {
                 alt={product.title}
               />
               <div className="card-body">
-                <div className="card-title bold-20 text-truncate">{product.postTitle}</div>
+                <div className="card-title bold-22 text-truncate">{product.postTitle}</div>
                 <p className="card-text">Giá thuê: {product.rentPrice}</p>
                 <p className="card-text">Mô tả: { isexpanded ? product.description : `${product.description.slice(0, 50)}...`}</p>
                 <button className="btn btn-outline-primary p-2" onClick={togglediscription}>{'Xem thêm'}</button>
