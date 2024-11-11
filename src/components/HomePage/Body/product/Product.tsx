@@ -4,17 +4,19 @@ import "./Product.scss";
 
 const Product: React.FC = () => {
   const navigate = useNavigate();
-  const [allProducts, setAllProducts] = useState<any[]>([]); // Set initial state to empty array
+  const [allProducts, setAllProducts] = useState<any[]>([]);
   const [visibleProducts, setVisibleProducts] = useState(8);
   const [expanded, setExpanded] = useState(false);
-  const [isexpanded, setIsexpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch("https://671ee00e1dfc429919834fc5.mockapi.io/products");
         const data = await response.json();
-        setAllProducts(data);
+        // Filter products where status is true
+        const filteredProducts = data.filter((product: { status: boolean; }) => product.status === true);
+        setAllProducts(filteredProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -32,9 +34,9 @@ const Product: React.FC = () => {
     setExpanded(false);
   };
 
-  const togglediscription = () =>{
-    setIsexpanded(!isexpanded)
-  }
+  const toggleDescription = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   const displayProducts = allProducts.slice(0, visibleProducts);
 
@@ -47,21 +49,25 @@ const Product: React.FC = () => {
       <div className="row mb-3">
         {displayProducts.map((product) => (
           <div className="col-md-3 mb-4" key={product.id}>
-            <div 
-              className="card" 
+            <div
+              className="card"
               onClick={() => handleProductClick(product.id)}
               style={{ cursor: 'pointer' }}
             >
               <img
-                src={product.images[0] || 'defaultImage.jpg'} // Display first image or a default
+                src={product.images[0] || 'defaultImage.jpg'} 
                 className="card-img-top"
                 alt={product.title}
               />
               <div className="card-body">
                 <div className="card-title bold-22 text-truncate">{product.postTitle}</div>
                 <p className="card-text">Giá thuê: {product.rentPrice}</p>
-                <p className="card-text">Mô tả: { isexpanded ? product.description : `${product.description.slice(0, 50)}...`}</p>
-                <button className="btn btn-outline-primary p-2" onClick={togglediscription}>{'Xem thêm'}</button>
+                <p className="card-text">
+                  Mô tả: {isExpanded ? product.description : `${product.description.slice(0, 50)}...`}
+                </p>
+                <button className="btn btn-outline-primary p-2" onClick={toggleDescription}>
+                  {'Xem thêm'}
+                </button>
               </div>
             </div>
           </div>

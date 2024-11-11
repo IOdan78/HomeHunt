@@ -28,9 +28,11 @@ const Post: React.FC = () => {
 
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
 
     try {
+      const userId = localStorage.getItem("userId");
+
       // Upload images to Firebase and get URLs
       const imageUrls: string[] = await Promise.all(
         selectedImages.map(async (file) => {
@@ -40,6 +42,7 @@ const Post: React.FC = () => {
         })
       );
 
+      // Include status as null to indicate pending approval
       const postData = {
         phoneseller,
         buildingName,
@@ -59,6 +62,8 @@ const Post: React.FC = () => {
         postTitle,
         description,
         images: imageUrls,
+        userId,
+        status: null, 
       };
 
       const response = await fetch(
@@ -74,7 +79,7 @@ const Post: React.FC = () => {
 
       const data = await response.json();
       if (response.status === 201) {
-        alert("Đăng tin thành công!");
+        alert("Bài đăng của bạn đang chờ được duyệt, vui lòng chờ!");
         navigate("/");
       } else {
         alert(data.message);
@@ -83,7 +88,7 @@ const Post: React.FC = () => {
       console.error("Lỗi:", error);
       alert("Đã xảy ra lỗi khi đăng tin.");
     } finally {
-      setIsLoading(false); // End loading after alert and navigation
+      setIsLoading(false);
     }
   };
 
@@ -283,48 +288,50 @@ const Post: React.FC = () => {
       </div>
 
       <div className="section d-flex flex-column gap-2">
-        <div>Diện tích và giá</div>
+        <div>Thông tin tài chính</div>
         <input
-          type="text"
+          type="number"
           name="area"
-          placeholder="Diện tích"
+          placeholder="Diện tích (m²)"
           className="form-control"
           value={area}
           onChange={(e) => setArea(e.target.value)}
+          min={0}
         />
         <input
-          type="text"
+          type="number"
           name="rentPrice"
           placeholder="Giá thuê"
           className="form-control"
           value={rentPrice}
           onChange={(e) => setRentPrice(e.target.value)}
+          min={0}
         />
         <input
-          type="text"
+          type="number"
           name="deposit"
-          placeholder="Số tiền cọc"
+          placeholder="Tiền cọc"
           className="form-control"
           value={deposit}
           onChange={(e) => setDeposit(e.target.value)}
+          min={0}
         />
       </div>
 
+      {/* Tiêu đề và mô tả */}
       <div className="section d-flex flex-column gap-2">
-        <div>Tiêu đề tin đăng và Mô tả chi tiết</div>
         <input
           type="text"
           name="postTitle"
-          placeholder="Tiêu đề tin đăng"
+          placeholder="Tiêu đề bài viết"
           className="form-control"
           value={postTitle}
           onChange={(e) => setPostTitle(e.target.value)}
         />
         <textarea
           name="description"
-          placeholder="Mô tả chi tiết"
+          placeholder="Mô tả"
           className="form-control"
-          rows={4}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />

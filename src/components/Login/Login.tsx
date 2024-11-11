@@ -35,7 +35,7 @@ const Login: React.FC = () => {
         setIsLoggedIn(true);
         setUserRole(user.role);
         localStorage.setItem("userRole", user.role);
-
+        localStorage.setItem("userId", user.id);
         // Redirect based on the role
         if (user.role === "Admin") {
           navigate("/admin", { replace: true });
