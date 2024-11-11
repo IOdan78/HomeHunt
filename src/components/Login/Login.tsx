@@ -35,7 +35,13 @@ const Login: React.FC = () => {
         setIsLoggedIn(true);
         setUserRole(user.role);
         localStorage.setItem("userRole", user.role);
-        navigate("/", { replace: true });
+
+        // Redirect based on the role
+        if (user.role === "Admin") {
+          navigate("/admin", { replace: true });
+        } else if (user.role === "customer") {
+          navigate("/", { replace: true });
+        }
       } else {
         alert("Tên đăng nhập hoặc mật khẩu không đúng!");
       }
@@ -125,7 +131,6 @@ const Login: React.FC = () => {
             <LazyLoad offset={0}>
               {loading && (
                 <div className="loading-icon">
-                  {" "}
                   {/* Placeholder for loading icon */}
                   <span>Loading...</span>
                 </div>

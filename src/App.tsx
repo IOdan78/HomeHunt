@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import Admin from "./components/AdminPage/AdminPage"
 import Home from "./components/HomePage/Home";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
@@ -23,6 +24,7 @@ function App() {
     <div>
       {!isAuthPage && <Navbar />}
       <Routes>
+        <Route path="/admin" element={<Admin/>} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
