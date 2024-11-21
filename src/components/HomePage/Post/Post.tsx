@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { storage } from "./firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Pay from "../../../assets/images/Pay.jpg";
 import "./Post.scss";
 
 const Post: React.FC = () => {
@@ -23,17 +24,18 @@ const Post: React.FC = () => {
   const [postTitle, setPostTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const navigate = useNavigate();
 
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    // setIsLoading(true);
 
     try {
       const userId = localStorage.getItem("userId");
 
-      // Upload images to Firebase and get URLs
       const imageUrls: string[] = await Promise.all(
         selectedImages.map(async (file) => {
           const storageRef = ref(storage, `images/${file.name}`);
@@ -42,7 +44,6 @@ const Post: React.FC = () => {
         })
       );
 
-      // Include status as null to indicate pending approval
       const postData = {
         phoneseller,
         buildingName,
@@ -63,7 +64,7 @@ const Post: React.FC = () => {
         description,
         images: imageUrls,
         userId,
-        status: null, 
+        status: null,
       };
 
       const response = await fetch(
@@ -88,7 +89,8 @@ const Post: React.FC = () => {
       console.error("Lỗi:", error);
       alert("Đã xảy ra lỗi khi đăng tin.");
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
+      setIsPopupVisible(false);
     }
   };
 
@@ -106,6 +108,10 @@ const Post: React.FC = () => {
   };
 
   const handleCancel = () => {
+    setIsPopupVisible(false);
+  };
+
+  const handleGetout = () => {
     navigate("/");
   };
 
@@ -337,25 +343,73 @@ const Post: React.FC = () => {
         />
       </div>
 
+      {/* Nút Thanh toán */}
       <div className="form-actions d-flex gap-3">
-        <button type="submit" className="btn btn btn-outline-primary">
-          Thanh toán
-        </button>
-        {isLoading && (
-          <div className="loading-overlay">
-            <div className="spinner-border text-light" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        )}
         <button
           type="button"
-          className="btn btn-outline-secondary"
-          onClick={handleCancel}
+          className="btn btn-outline-primary"
+          onClick={() => setIsPopupVisible(true)}
+        >
+          Thanh toán
+        </button>
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={handleGetout}
         >
           Quay lại trang chủ
         </button>
       </div>
+
+      {/* Popup */}
+      {isPopupVisible && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            {/* Thêm ảnh Pay */}
+            <img
+              src={Pay}
+              alt="Pay"
+              className="pay-image"
+              style={{
+                display: "block",
+                margin: "0 auto",
+                maxWidth: "100%",
+                height: "auto",
+              }}
+            />
+
+            <div className="confirmation-section mt-3">
+              <input
+                type="checkbox"
+                id="confirmationCheckbox"
+                checked={isCheckboxChecked}
+                onChange={(e) => setIsCheckboxChecked(e.target.checked)}
+              />
+              <label htmlFor="confirmationCheckbox">
+                Đảm bảo là bạn đã điền đúng toàn bộ thông tin và đã thanh toán
+                để đăng tin.
+              </label>
+            </div>
+            <div className="form-actions d-flex gap-3 mt-3">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handlePost}
+                disabled={!isCheckboxChecked}
+              >
+                Đăng tin
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handleCancel}
+              >
+                Hủy
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 };
