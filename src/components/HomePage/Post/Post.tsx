@@ -339,7 +339,7 @@ const Post: React.FC = () => {
 
       <div className="form-actions d-flex gap-3">
         <button type="submit" className="btn btn btn-outline-primary">
-          Đăng tin
+          Thanh toán
         </button>
         {isLoading && (
           <div className="loading-overlay">
