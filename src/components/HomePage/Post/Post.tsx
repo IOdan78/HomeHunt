@@ -32,6 +32,30 @@ const Post: React.FC = () => {
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
     // setIsLoading(true);
+    if (
+    !phoneseller ||
+    !buildingName ||
+    !address ||
+    !propertyType ||
+    !selectedImages.length ||
+    apartmentNumber === null ||
+    block === null ||
+    floor === null ||
+    !apartmentType ||
+    !bedrooms || 
+    !bathrooms ||
+    !legalDocument ||
+    !furnitureCondition ||
+    area === null ||
+    !rentPrice ||
+    !deposit ||
+    !postTitle ||
+    !description
+  ) {
+    alert("Vui lòng điền đầy đủ tất cả các thông tin trước khi đăng bài!");
+    return;
+  }
+
 
     try {
       const userId = localStorage.getItem("userId");
@@ -154,6 +178,7 @@ const Post: React.FC = () => {
           className="form-control"
           value={propertyType}
           onChange={(e) => setPropertyType(e.target.value)}
+          required
         />
 
         <button
@@ -193,7 +218,7 @@ const Post: React.FC = () => {
 
       {/* Vị trí Bất Động Sản */}
       <div className="section d-flex flex-column gap-2">
-        <div>Vị trí Bất Động Sản</div>
+        <div>Vị trí chung cư (bỏ trống nếu là trọ)</div>
         <div className="row">
           <div className="col-md-4">
             <input
@@ -326,6 +351,7 @@ const Post: React.FC = () => {
 
       {/* Tiêu đề và mô tả */}
       <div className="section d-flex flex-column gap-2">
+        <div>Mô tả:</div>
         <input
           type="text"
           name="postTitle"

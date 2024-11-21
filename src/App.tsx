@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import Admin from "./components/AdminPage/AdminPage"
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import Admin from "./components/AdminPage/AdminPage";
 import Home from "./components/HomePage/Home";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
@@ -13,6 +13,9 @@ import Footer from "./components/HomePage/Footer/Footer";
 function App() {
   const location = useLocation();
 
+  // Giả sử vai trò người dùng được lưu trong localStorage hoặc bạn có thể lấy từ API
+  const userRole = localStorage.getItem("userRole"); // "admin" hoặc "customer" hoặc null nếu chưa đăng nhập
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
@@ -24,7 +27,17 @@ function App() {
     <div>
       {!isAuthPage && <Navbar />}
       <Routes>
-        <Route path="/admin" element={<Admin/>} />
+        {/* Chỉ hiển thị AdminPage nếu role là admin */}
+        <Route
+          path="/admin"
+          element={
+            userRole === "Admin" ? (
+              <Admin />
+            ) : (
+              <Navigate to="/" replace /> // Chuyển hướng về trang chủ
+            )
+          }
+        />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
