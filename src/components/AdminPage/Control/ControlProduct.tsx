@@ -8,47 +8,61 @@ const ControlProduct: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
-          "https://671ee00e1dfc429919834fc5.mockapi.io/products"
-        );
-        const data = await response.json();
-
-        // Lọc sản phẩm theo trạng thái
-        const pending = data.filter((product: { status: boolean | null }) => product.status === null);
-        const approved = data.filter((product: { status: boolean | null }) => product.status === true);
-
-        setPendingProducts(pending);
-        setApprovedProducts(approved);
+        // Fetch products with status=null (pending)
+        const pendingResponse = await fetch("http://homehunt.somee.com/api/post");
+        const pendingData = await pendingResponse.json();
+  
+        // Fetch products with status=true (approved)
+        const approvedResponse = await fetch("http://homehunt.somee.com/api/post?status=true");
+        const approvedData = await approvedResponse.json();
+  
+        // Set the states
+        setPendingProducts(pendingData);
+        setApprovedProducts(approvedData);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-
+  
     fetchProducts();
   }, []);
 
+  const token = localStorage.getItem("token");
+
   // Cập nhật trạng thái sản phẩm
-  const updateProductStatus = async (id: number, status: boolean | null) => {
-    try {
-      await fetch(`https://671ee00e1dfc429919834fc5.mockapi.io/products/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
-      });
+const updateProductStatus = async (id: string, status: boolean | null) => {
+  try {
 
-      // Cập nhật danh sách sản phẩm
-      if (status === true) {
-        setPendingProducts((prev) => prev.filter((product) => product.id !== id));
-        const approvedProduct = pendingProducts.find((product) => product.id === id);
-        if (approvedProduct) setApprovedProducts((prev) => [...prev, { ...approvedProduct, status }]);
-      } else {
-        setPendingProducts((prev) => prev.filter((product) => product.id !== id));
-      }
-    } catch (error) {
-      console.error("Error updating product status:", error);
+    // Prepare the request body with only the status field
+    const requestBody = new FormData();
+    requestBody.append('Status', String(status));
+
+    const response = await fetch(`https://localhost:7293/api/post/${id}`, {
+      method: 'PUT',
+      headers: {
+        'accept': '*/*',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: requestBody,
+    });
+
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error('Failed to update product status');
     }
-  };
 
+    // Update the state for pending and approved products based on status
+    if (status === true) {
+      setPendingProducts((prev) => prev.filter((product) => product.id !== id));
+      const approvedProduct = pendingProducts.find((product) => product.id === id);
+      if (approvedProduct) setApprovedProducts((prev) => [...prev, { ...approvedProduct, status }]);
+    } else {
+      setPendingProducts((prev) => prev.filter((product) => product.id !== id));
+    }
+  } catch (error) {
+    console.error('Error updating product status:', error);
+  }
+};
   return (
     <div className="container">
       {/* Duyệt tin */}

@@ -10,10 +10,10 @@ import LazyLoad from "react-lazyload";
 const Register: React.FC = () => {
   const [username, setUsername] = useState("");
   const [fullname, setFullname] = useState("");
-  const [phone, setPhone] = useState<number | undefined>(undefined);
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role] = useState("Customer");
+  // const [role] = useState("Customer");
 
   
   const { isLoggedIn } = useLogin();
@@ -27,8 +27,7 @@ const Register: React.FC = () => {
   }, [isLoggedIn, navigate]);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPhone(value ? Number(value) : undefined);
+    setPhone(e.target.value);
   };
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -37,16 +36,22 @@ const Register: React.FC = () => {
       alert("Mật khẩu xác nhận không khớp!");
       return;
     }
-
-    try {
-      const response = await fetch("https://671ee00e1dfc429919834fc5.mockapi.io/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, fullname, phone, password, role }),
-      });
-
+// https://671ee00e1dfc429919834fc5.mockapi.io/users
+// https://localhost:7293/api/auth/register
+// http://homehunt.somee.com/api/auth/register
+try {
+  const response = await fetch("http://homehunt.somee.com/api/auth/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      fullName: fullname,
+      username,
+      phoneNumber: phone,
+      password,
+    }),
+  });
       const data = await response.json();
       if (response.status === 201) {
         alert("Đăng ký thành công!");

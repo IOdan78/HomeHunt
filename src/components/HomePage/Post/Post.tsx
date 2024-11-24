@@ -6,7 +6,6 @@ import Pay from "../../../assets/images/Pay.jpg";
 import "./Post.scss";
 
 const Post: React.FC = () => {
-  const [phoneseller, setPhoneseller] = useState("");
   const [buildingName, setBuildingName] = useState("");
   const [address, setAddress] = useState("");
   const [propertyType, setPropertyType] = useState("");
@@ -31,32 +30,30 @@ const Post: React.FC = () => {
 
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
-    // setIsLoading(true);
+  
     if (
-    !phoneseller ||
-    !buildingName ||
-    !address ||
-    !propertyType ||
-    !selectedImages.length ||
-    apartmentNumber === null ||
-    block === null ||
-    floor === null ||
-    !apartmentType ||
-    !bedrooms || 
-    !bathrooms ||
-    !legalDocument ||
-    !furnitureCondition ||
-    area === null ||
-    !rentPrice ||
-    !deposit ||
-    !postTitle ||
-    !description
-  ) {
-    alert("Vui lòng điền đầy đủ tất cả các thông tin trước khi đăng bài!");
-    return;
-  }
-
-
+      !buildingName ||
+      !address ||
+      !propertyType ||
+      !selectedImages.length ||
+      !apartmentNumber ||
+      !block ||
+      !floor ||
+      !apartmentType ||
+      !bedrooms ||
+      !bathrooms ||
+      !legalDocument ||
+      !furnitureCondition ||
+      !area ||
+      !rentPrice ||
+      !deposit ||
+      !postTitle ||
+      !description
+    ) {
+      alert("Vui lòng điền đầy đủ tất cả các thông tin trước khi đăng bài!");
+      return;
+    }
+  
     try {
       const userId = localStorage.getItem("userId");
 
@@ -67,57 +64,88 @@ const Post: React.FC = () => {
           return await getDownloadURL(storageRef);
         })
       );
+  
+      // Create FormData object
+      const formData = new FormData();
+  
+      formData.append("BuildingName", buildingName);
+      formData.append("Address", address);
+      formData.append("PropertyType", propertyType);
+      formData.append("ApartmentNumber", apartmentNumber);
+      formData.append("Block", block);
+      formData.append("Floor", floor);
+      formData.append("ApartmentType", apartmentType);
+      formData.append("Bedrooms", bedrooms);
+      formData.append("Bathrooms", bathrooms);
+      formData.append("LegalDocument", legalDocument);
+      formData.append("FurnitureCondition", furnitureCondition);
+      formData.append("Area", area);
+      formData.append("Price", rentPrice); // Note: Match API field
+      formData.append("Deposit", deposit);
+      formData.append("PostTitle", postTitle);
+      formData.append("Description", description);
+      formData.append("UserId", userId || "");
+  
+      // Add images to FormData
+      imageUrls.forEach((url) => {
+        formData.append("Images", url); // Append each URL
+      });
+    
+  
+      const response = await fetch("http://homehunt.somee.com/api/post", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+  
+      if (response.status !== 201) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+      const { transactionId, id: postId } = await response.json();
 
-      const postData = {
-        phoneseller,
-        buildingName,
-        address,
-        propertyType,
-        apartmentNumber,
-        block,
-        floor,
-        apartmentType,
-        bedrooms,
-        bathrooms,
-        legalDocument,
-        furnitureCondition,
-        area,
-        rentPrice,
-        deposit,
-        postTitle,
-        description,
-        images: imageUrls,
-        userId,
-        status: null,
-      };
-
-      const response = await fetch(
-        "https://671ee00e1dfc429919834fc5.mockapi.io/products",
+      // Make the second API call
+      const phone = localStorage.getItem("phone");
+      const transactionResponse = await fetch(
+        `http://homehunt.somee.com/api/transaction/create-payment-link?phone=${phone}&postId=${postId}&transactionId=${transactionId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify(postData),
+          body: JSON.stringify({
+            productName: "postTitle",
+            description: "description",
+            price: 10000, // Use rentPrice for consistency
+            returnUrl: window.location.origin,
+            cancelUrl: window.location.origin,
+          }),
         }
       );
-
-      const data = await response.json();
-      if (response.status === 201) {
-        alert("Bài đăng của bạn đang chờ được duyệt, vui lòng chờ!");
-        navigate("/");
-      } else {
-        alert(data.message);
+  
+      if (transactionResponse.status !== 200) {
+        const transactionError = await transactionResponse.json();
+        throw new Error(transactionError.message);
       }
-    } catch (error) {
-      console.error("Lỗi:", error);
-      alert("Đã xảy ra lỗi khi đăng tin.");
+
+      const transactionData = await transactionResponse.json();
+      const checkoutUrl = transactionData.data.paymentInfo.checkoutUrl;
+
+      window.location.href = checkoutUrl;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Lỗi:", error);
+        alert("Đã xảy ra lỗi khi đăng tin: " + error.message);
+      } else {
+        console.error("Lỗi không xác định:", error);
+      }
     } finally {
-      // setIsLoading(false);
       setIsPopupVisible(false);
     }
   };
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
@@ -142,16 +170,6 @@ const Post: React.FC = () => {
   return (
     <form className="real-estate-form" onSubmit={handlePost}>
       <div className="bold-30 text-center mb-3">Thêm bất động sản</div>
-      <div className="section d-flex flex-column gap-2">
-        <input
-          type="tel"
-          name="phoneseller"
-          placeholder="Số điện thoại"
-          className="form-control"
-          value={phoneseller}
-          onChange={(e) => setPhoneseller(e.target.value)}
-        />
-      </div>
 
       <div className="section d-flex flex-column gap-2">
         <div className="bold-20">Địa chỉ Bất Động Sản và Hình ảnh</div>
@@ -368,9 +386,25 @@ const Post: React.FC = () => {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-
+      <div className="form-actions d-flex gap-3 mt-3">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handlePost}
+                // disabled={!isCheckboxChecked}
+              >
+                Đăng tin
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handleCancel}
+              >
+                Hủy
+              </button>
+            </div>
       {/* Nút Thanh toán */}
-      <div className="form-actions d-flex gap-3">
+      {/* <div className="form-actions d-flex gap-3">
         <button
           type="button"
           className="btn btn-outline-primary"
@@ -385,7 +419,7 @@ const Post: React.FC = () => {
         >
           Quay lại trang chủ
         </button>
-      </div>
+      </div> */}
 
       {/* Popup */}
       {isPopupVisible && (
@@ -416,23 +450,7 @@ const Post: React.FC = () => {
                 để đăng tin.
               </label>
             </div>
-            <div className="form-actions d-flex gap-3 mt-3">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handlePost}
-                disabled={!isCheckboxChecked}
-              >
-                Đăng tin
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={handleCancel}
-              >
-                Hủy
-              </button>
-            </div>
+           
           </div>
         </div>
       )}

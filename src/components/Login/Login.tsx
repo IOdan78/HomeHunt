@@ -24,30 +24,51 @@ const Login: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
+    // https://671ee00e1dfc429919834fc5.mockapi.io/users
+    // https://localhost:7293/api/auth/login
+    // http://homehunt.somee.com/api/auth/login
     try {
-      const response = await fetch("https://671ee00e1dfc429919834fc5.mockapi.io/users");
-      const users = await response.json();
-
-      const user = users.find((user: any) => user.username === username && user.password === password);
-
-      if (user) {
-        setIsLoggedIn(true);
-        setUserRole(user.role);
-        localStorage.setItem("userRole", user.role);
+      const response = await fetch("http://homehunt.somee.com/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Đăng nhập không thành công.");
+      }
+  
+      const result = await response.json();
+  
+      // Check if the login was successful
+      if (result.code === 200 && result.data) {
+        const { token, user } = result.data;
+  
+        // Save login data
+        localStorage.setItem("token", token);
         localStorage.setItem("userId", user.id);
-        // Redirect based on the role
-        if (user.role === "Admin") {
+        localStorage.setItem("userRole", user.roleName || "Customer");
+        localStorage.setItem("phone", user.phone);
+  
+        setIsLoggedIn(true);
+        setUserRole(user.roleName || "Customer");
+  
+        // Navigate based on the role
+        if (user.roleName === "Admin") {
           navigate("/admin", { replace: true });
-        } else if (user.role === "customer") {
+        } else {
           navigate("/", { replace: true });
         }
       } else {
-        alert("Tên đăng nhập hoặc mật khẩu không đúng!");
+        throw new Error(result.message || "Đăng nhập không thành công.");
       }
-    } catch (error) {
-      console.error("Lỗi:", error);
-      alert("Đã xảy ra lỗi khi đăng nhập.");
+    } catch (error: any) {
+      console.error("Lỗi:", error.message);
+      alert(error.message || "Đã xảy ra lỗi khi đăng nhập.");
     }
   };
 

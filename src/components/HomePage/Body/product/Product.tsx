@@ -9,20 +9,23 @@ const Product: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const status = true;
+// https://671ee00e1dfc429919834fc5.mockapi.io/products
+// http://homehunt.somee.com/api/post?status=
+// https://localhost:7293/api/post?status=
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://671ee00e1dfc429919834fc5.mockapi.io/products");
+        const response = await fetch(`http://homehunt.somee.com/api/post?status=${status}`);
         const data = await response.json();
-        // Filter products where status is true
-        const filteredProducts = data.filter((product: { status: boolean; }) => product.status === true);
-        setAllProducts(filteredProducts);
+        setAllProducts(data); 
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
     fetchProducts();
-  }, []);
+  }, [status]);
 
   const handleSeeMore = () => {
     setVisibleProducts(allProducts.length);
@@ -57,7 +60,7 @@ const Product: React.FC = () => {
               <img
                 src={product.images[0] || 'defaultImage.jpg'} 
                 className="card-img-top"
-                alt={product.title}
+                alt={product.postTitle}
               />
               <div className="card-body">
                 <div className="card-title bold-22 text-truncate">{product.postTitle}</div>
