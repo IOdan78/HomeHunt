@@ -119,7 +119,7 @@ const Post: React.FC = () => {
           body: JSON.stringify({
             productName: "postTitle",
             description: "description",
-            price: 10000, // Use rentPrice for consistency
+            price: 100000, // Use rentPrice for consistency
             returnUrl: window.location.origin,
             cancelUrl: window.location.origin,
           }),
