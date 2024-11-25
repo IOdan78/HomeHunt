@@ -94,7 +94,7 @@ const Post: React.FC = () => {
         formData.append("Images", url);
       });
 
-      const response = await fetch("http://homehunt.somee.com/api/post", {
+      const response = await fetch("https://homehunt.somee.com/api/post", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -111,7 +111,7 @@ const Post: React.FC = () => {
       // Make the second API call
 
       const transactionResponse = await fetch(
-        `http://homehunt.somee.com/api/transaction/create-payment-link?phone=${phone}&postId=${postId}&transactionId=${transactionId}`,
+        `https://homehunt.somee.com/api/transaction/create-payment-link?phone=${phone}&postId=${postId}&transactionId=${transactionId}`,
         {
           method: "POST",
           headers: {

@@ -27,13 +27,13 @@ const ProductDetail: React.FC = () => {
 
   // https://localhost:7293/api/post/${id}
   // https://671ee00e1dfc429919834fc5.mockapi.io/products/${id}`
-  // http://homehunt.somee.com/api/post/${id}
+  // https://homehunt.somee.com/api/post/${id}
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `http://homehunt.somee.com/api/post/${id}`
+          `https://homehunt.somee.com/api/post/${id}`
         );
         const data = await response.json();
         setProduct(data);

@@ -11,14 +11,14 @@ const Product: React.FC = () => {
 
   const status = true;
   // https://671ee00e1dfc429919834fc5.mockapi.io/products
-  // http://homehunt.somee.com/api/post?status=
+  // https://homehunt.somee.com/api/post?status=
   // https://localhost:7293/api/post?status=
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `http://homehunt.somee.com/api/post?status=${status}`
+          `https://homehunt.somee.com/api/post?status=${status}`
         );
         const data = await response.json();
         setAllProducts(data);

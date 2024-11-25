@@ -24,7 +24,7 @@ export const PollingProvider: React.FC<{ children: React.ReactNode }> = ({
   const pollPaymentStatus = async (phone: string, orderCode: string) => {
     try {
       const response = await fetch(
-        `http://homehunt.somee.com/api/transaction/check-order?userPhone=${phone}`,
+        `https://homehunt.somee.com/api/transaction/check-order?userPhone=${phone}`,
         {
           method: "POST",
           headers: {

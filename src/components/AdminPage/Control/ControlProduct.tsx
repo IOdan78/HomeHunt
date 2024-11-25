@@ -10,7 +10,7 @@ const ControlProduct: React.FC = () => {
       try {
         // Fetch products with status=true (approved)
         const approvedResponse = await fetch(
-          "http://homehunt.somee.com/api/post?status=true"
+          "https://homehunt.somee.com/api/post?status=true"
         );
         const approvedData = await approvedResponse.json();
 
@@ -18,7 +18,7 @@ const ControlProduct: React.FC = () => {
 
         // Fetch products with status=null (pending)
         const pendingResponse = await fetch(
-          "http://homehunt.somee.com/api/post"
+          "https://homehunt.somee.com/api/post"
         );
         const pendingData = await pendingResponse.json();
 
@@ -41,14 +41,17 @@ const ControlProduct: React.FC = () => {
       const requestBody = new FormData();
       requestBody.append("Status", String(status));
 
-      const response = await fetch(`http://homehunt.somee.com/api/post/${id}`, {
-        method: "PUT",
-        headers: {
-          accept: "*/*",
-          Authorization: `Bearer ${token}`,
-        },
-        body: requestBody,
-      });
+      const response = await fetch(
+        `https://homehunt.somee.com/api/post/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            accept: "*/*",
+            Authorization: `Bearer ${token}`,
+          },
+          body: requestBody,
+        }
+      );
 
       // Check if the response is successful
       if (!response.ok) {

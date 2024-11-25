@@ -37,10 +37,10 @@ const Register: React.FC = () => {
     }
     // https://671ee00e1dfc429919834fc5.mockapi.io/users
     // https://localhost:7293/api/auth/register
-    // http://homehunt.somee.com/api/auth/register
+    // https://homehunt.somee.com/api/auth/register
     try {
       const response = await fetch(
-        "http://homehunt.somee.com/api/auth/register",
+        "https://homehunt.somee.com/api/auth/register",
         {
           method: "POST",
           headers: {

@@ -27,15 +27,18 @@ const Login: React.FC = () => {
 
     // https://671ee00e1dfc429919834fc5.mockapi.io/users
     // https://localhost:7293/api/auth/login
-    // http://homehunt.somee.com/api/auth/login
+    // https://homehunt.somee.com/api/auth/login
     try {
-      const response = await fetch("http://homehunt.somee.com/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        "https://homehunt.somee.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
