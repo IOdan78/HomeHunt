@@ -24,7 +24,7 @@ const Post: React.FC = () => {
   const [postTitle, setPostTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const { startPolling } = usePolling();
@@ -32,6 +32,7 @@ const Post: React.FC = () => {
 
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (
       !buildingName ||
@@ -53,6 +54,7 @@ const Post: React.FC = () => {
       !description
     ) {
       alert("Vui lòng điền đầy đủ tất cả các thông tin trước khi đăng bài!");
+      setIsLoading(false);
       return;
     }
 
@@ -147,6 +149,7 @@ const Post: React.FC = () => {
         console.error("Lỗi không xác định:", error);
       }
     } finally {
+      setIsLoading(false);
       setIsPopupVisible(false);
     }
   };
@@ -393,13 +396,25 @@ const Post: React.FC = () => {
       </div>
       <div className="form-actions d-flex gap-3 mt-3">
         <button
-          type="button"
+          type="submit"
           className="btn btn-primary"
-          onClick={handlePost}
-          // disabled={!isCheckboxChecked}
+          disabled={isLoading} // Disable the button when loading
         >
-          Đăng tin
+          {isLoading && <div className="spinner"></div>
+            ? "Đang đăng tin..."
+            : "Đăng tin"}{" "}
+          {/* Show loading text */}
         </button>
+        {isLoading && (
+          <div className="loading-overlay">
+            <div className="spinner-container">
+              <div className="spinner-border" role="status">
+                <span className="sr-only"></span>
+              </div>
+              <span className="loading-text">Loading...</span>
+            </div>
+          </div>
+        )}
         <button
           type="button"
           className="btn btn-secondary"
