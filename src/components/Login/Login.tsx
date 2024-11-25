@@ -10,7 +10,7 @@ import LazyLoad from "react-lazyload";
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const { setIsLoggedIn, setUserRole } = useLogin();
   const { isLoggedIn } = useLogin();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Login: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     // https://671ee00e1dfc429919834fc5.mockapi.io/users
     // https://localhost:7293/api/auth/login
     // http://homehunt.somee.com/api/auth/login
@@ -36,27 +36,27 @@ const Login: React.FC = () => {
         },
         body: JSON.stringify({ username, password }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Đăng nhập không thành công.");
       }
-  
+
       const result = await response.json();
-  
+
       // Check if the login was successful
       if (result.code === 200 && result.data) {
         const { token, user } = result.data;
-  
+
         // Save login data
         localStorage.setItem("token", token);
         localStorage.setItem("userId", user.id);
         localStorage.setItem("userRole", user.roleName || "Customer");
         localStorage.setItem("phone", user.phone);
-  
+
         setIsLoggedIn(true);
         setUserRole(user.roleName || "Customer");
-  
+
         // Navigate based on the role
         if (user.roleName === "Admin") {
           navigate("/admin", { replace: true });

@@ -4,6 +4,7 @@ import { storage } from "./firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Pay from "../../../assets/images/Pay.jpg";
 import "./Post.scss";
+import { usePolling } from "../PollingContext";
 
 const Post: React.FC = () => {
   const [buildingName, setBuildingName] = useState("");
@@ -26,11 +27,12 @@ const Post: React.FC = () => {
   // const [isLoading, setIsLoading] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+  const { startPolling } = usePolling();
   const navigate = useNavigate();
 
   const handlePost = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (
       !buildingName ||
       !address ||
@@ -53,9 +55,10 @@ const Post: React.FC = () => {
       alert("Vui lòng điền đầy đủ tất cả các thông tin trước khi đăng bài!");
       return;
     }
-  
+
     try {
       const userId = localStorage.getItem("userId");
+      const phone = localStorage.getItem("phone") || "";
 
       const imageUrls: string[] = await Promise.all(
         selectedImages.map(async (file) => {
@@ -64,10 +67,9 @@ const Post: React.FC = () => {
           return await getDownloadURL(storageRef);
         })
       );
-  
-      // Create FormData object
+
       const formData = new FormData();
-  
+
       formData.append("BuildingName", buildingName);
       formData.append("Address", address);
       formData.append("PropertyType", propertyType);
@@ -80,18 +82,16 @@ const Post: React.FC = () => {
       formData.append("LegalDocument", legalDocument);
       formData.append("FurnitureCondition", furnitureCondition);
       formData.append("Area", area);
-      formData.append("Price", rentPrice); // Note: Match API field
+      formData.append("Price", rentPrice);
       formData.append("Deposit", deposit);
       formData.append("PostTitle", postTitle);
       formData.append("Description", description);
       formData.append("UserId", userId || "");
-  
-      // Add images to FormData
+
       imageUrls.forEach((url) => {
-        formData.append("Images", url); // Append each URL
+        formData.append("Images", url);
       });
-    
-  
+
       const response = await fetch("http://homehunt.somee.com/api/post", {
         method: "POST",
         headers: {
@@ -99,7 +99,7 @@ const Post: React.FC = () => {
         },
         body: formData,
       });
-  
+
       if (response.status !== 201) {
         const errorData = await response.json();
         throw new Error(errorData.message);
@@ -107,7 +107,7 @@ const Post: React.FC = () => {
       const { transactionId, id: postId } = await response.json();
 
       // Make the second API call
-      const phone = localStorage.getItem("phone");
+
       const transactionResponse = await fetch(
         `http://homehunt.somee.com/api/transaction/create-payment-link?phone=${phone}&postId=${postId}&transactionId=${transactionId}`,
         {
@@ -117,24 +117,28 @@ const Post: React.FC = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify({
-            productName: "postTitle",
-            description: "description",
-            price: 10000, // Use rentPrice for consistency
+            productName: postTitle,
+            description: "Payment For Post",
+            price: 100000,
             returnUrl: window.location.origin,
             cancelUrl: window.location.origin,
           }),
         }
       );
-  
+
       if (transactionResponse.status !== 200) {
         const transactionError = await transactionResponse.json();
         throw new Error(transactionError.message);
       }
 
       const transactionData = await transactionResponse.json();
+      console.log("QR link", transactionData.data.paymentInfo.checkoutUrl);
       const checkoutUrl = transactionData.data.paymentInfo.checkoutUrl;
+      const orderCode = transactionData.data.paymentInfo.orderCode;
 
       window.location.href = checkoutUrl;
+
+      startPolling(phone, orderCode);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Lỗi:", error);
@@ -146,6 +150,7 @@ const Post: React.FC = () => {
       setIsPopupVisible(false);
     }
   };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
@@ -387,22 +392,22 @@ const Post: React.FC = () => {
         />
       </div>
       <div className="form-actions d-flex gap-3 mt-3">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handlePost}
-                // disabled={!isCheckboxChecked}
-              >
-                Đăng tin
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={handleCancel}
-              >
-                Hủy
-              </button>
-            </div>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={handlePost}
+          // disabled={!isCheckboxChecked}
+        >
+          Đăng tin
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={handleGetout}
+        >
+          Hủy
+        </button>
+      </div>
       {/* Nút Thanh toán */}
       {/* <div className="form-actions d-flex gap-3">
         <button
@@ -450,7 +455,6 @@ const Post: React.FC = () => {
                 để đăng tin.
               </label>
             </div>
-           
           </div>
         </div>
       )}

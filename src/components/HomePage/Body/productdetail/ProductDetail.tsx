@@ -25,9 +25,9 @@ const ProductDetail: React.FC = () => {
   const [mainImage, setMainImage] = useState<string>("");
   const [showPhone, setShowPhone] = useState(false);
 
-// https://localhost:7293/api/post/${id}
-// https://671ee00e1dfc429919834fc5.mockapi.io/products/${id}`
-// http://homehunt.somee.com/api/post/${id}
+  // https://localhost:7293/api/post/${id}
+  // https://671ee00e1dfc429919834fc5.mockapi.io/products/${id}`
+  // http://homehunt.somee.com/api/post/${id}
 
   useEffect(() => {
     const fetchProduct = async () => {

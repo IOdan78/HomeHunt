@@ -10,16 +10,18 @@ const Product: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const status = true;
-// https://671ee00e1dfc429919834fc5.mockapi.io/products
-// http://homehunt.somee.com/api/post?status=
-// https://localhost:7293/api/post?status=
+  // https://671ee00e1dfc429919834fc5.mockapi.io/products
+  // http://homehunt.somee.com/api/post?status=
+  // https://localhost:7293/api/post?status=
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`http://homehunt.somee.com/api/post?status=${status}`);
+        const response = await fetch(
+          `http://homehunt.somee.com/api/post?status=${status}`
+        );
         const data = await response.json();
-        setAllProducts(data); 
+        setAllProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -55,21 +57,29 @@ const Product: React.FC = () => {
             <div
               className="card"
               onClick={() => handleProductClick(product.id)}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <img
-                src={product.images[0] || 'defaultImage.jpg'} 
+                src={product.images[0] || "defaultImage.jpg"}
                 className="card-img-top"
                 alt={product.postTitle}
               />
               <div className="card-body">
-                <div className="card-title bold-22 text-truncate">{product.postTitle}</div>
+                <div className="card-title bold-22 text-truncate">
+                  {product.postTitle}
+                </div>
                 <p className="card-text">Giá thuê: {product.rentPrice}</p>
                 <p className="card-text">
-                  Mô tả: {isExpanded ? product.description : `${product.description.slice(0, 50)}...`}
+                  Mô tả:{" "}
+                  {isExpanded
+                    ? product.description
+                    : `${product.description.slice(0, 50)}...`}
                 </p>
-                <button className="btn btn-outline-primary p-2" onClick={toggleDescription}>
-                  {'Xem thêm'}
+                <button
+                  className="btn btn-outline-primary p-2"
+                  onClick={toggleDescription}
+                >
+                  {"Xem thêm"}
                 </button>
               </div>
             </div>

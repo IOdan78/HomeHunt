@@ -8,61 +8,75 @@ const ControlProduct: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Fetch products with status=null (pending)
-        const pendingResponse = await fetch("http://homehunt.somee.com/api/post");
-        const pendingData = await pendingResponse.json();
-  
         // Fetch products with status=true (approved)
-        const approvedResponse = await fetch("http://homehunt.somee.com/api/post?status=true");
+        const approvedResponse = await fetch(
+          "http://homehunt.somee.com/api/post?status=true"
+        );
         const approvedData = await approvedResponse.json();
-  
+
+        setApprovedProducts(approvedData);
+
+        // Fetch products with status=null (pending)
+        const pendingResponse = await fetch(
+          "http://homehunt.somee.com/api/post"
+        );
+        const pendingData = await pendingResponse.json();
+
         // Set the states
         setPendingProducts(pendingData);
-        setApprovedProducts(approvedData);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-  
+
     fetchProducts();
   }, []);
 
   const token = localStorage.getItem("token");
 
   // Cập nhật trạng thái sản phẩm
-const updateProductStatus = async (id: string, status: boolean | null) => {
-  try {
+  const updateProductStatus = async (id: string, status: boolean | null) => {
+    try {
+      // Prepare the request body with only the status field
+      const requestBody = new FormData();
+      requestBody.append("Status", String(status));
 
-    // Prepare the request body with only the status field
-    const requestBody = new FormData();
-    requestBody.append('Status', String(status));
+      const response = await fetch(`http://homehunt.somee.com/api/post/${id}`, {
+        method: "PUT",
+        headers: {
+          accept: "*/*",
+          Authorization: `Bearer ${token}`,
+        },
+        body: requestBody,
+      });
 
-    const response = await fetch(`https://localhost:7293/api/post/${id}`, {
-      method: 'PUT',
-      headers: {
-        'accept': '*/*',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: requestBody,
-    });
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error("Failed to update product status");
+      }
 
-    // Check if the response is successful
-    if (!response.ok) {
-      throw new Error('Failed to update product status');
+      // Update the state for pending and approved products based on status
+      if (status === true) {
+        setPendingProducts((prev) =>
+          prev.filter((product) => product.id !== id)
+        );
+        const approvedProduct = pendingProducts.find(
+          (product) => product.id === id
+        );
+        if (approvedProduct)
+          setApprovedProducts((prev) => [
+            ...prev,
+            { ...approvedProduct, status },
+          ]);
+      } else {
+        setPendingProducts((prev) =>
+          prev.filter((product) => product.id !== id)
+        );
+      }
+    } catch (error) {
+      console.error("Error updating product status:", error);
     }
-
-    // Update the state for pending and approved products based on status
-    if (status === true) {
-      setPendingProducts((prev) => prev.filter((product) => product.id !== id));
-      const approvedProduct = pendingProducts.find((product) => product.id === id);
-      if (approvedProduct) setApprovedProducts((prev) => [...prev, { ...approvedProduct, status }]);
-    } else {
-      setPendingProducts((prev) => prev.filter((product) => product.id !== id));
-    }
-  } catch (error) {
-    console.error('Error updating product status:', error);
-  }
-};
+  };
   return (
     <div className="container">
       {/* Duyệt tin */}
